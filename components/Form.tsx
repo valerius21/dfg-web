@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Formik, useFormikContext } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
+import { useTranslation } from 'react-i18next';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
@@ -17,6 +18,7 @@ interface FormProps {
 const Form: FC<FormProps> = ({ pageNumber, uid }) => {
 	const nextPage = `/${uid}/${pageNumber + 1}`
 	const router = useRouter()
+	const { t } = useTranslation()
 
 	// prefetching the next page
 	useEffect(() => {
@@ -50,20 +52,20 @@ const Form: FC<FormProps> = ({ pageNumber, uid }) => {
 					px={5}
 					onSubmit={handleSubmit as any}
 				>
-					<RadioGroupControl mt={4} name="sensitivity" label="Classify the picture regarding its sensitivity.">
+					<RadioGroupControl mt={4} name="sensitivity" label={t('questionOne')}>
 						<Stack spacing="1">
-							<Radio value="1">very private</Radio>
-							<Radio value="2">private</Radio>
-							<Radio value="3">not private</Radio>
+							<Radio value="1">{t('a11')}</Radio>
+							<Radio value="2">{t('a12')}</Radio>
+							<Radio value="3">{t('a13')}</Radio>
 						</Stack>
 					</RadioGroupControl>
-					<CheckboxContainer mt={4} name="targetDemographic" label="With whom would you be most likely to share this picture?">
+					<CheckboxContainer mt={4} name="targetDemographic" label={t('questionTwo')}>
 						<Stack spacing="1">
-							<CheckboxControl name="targetDemographic" value="Friends">Friends</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Aquantance">Aquantance</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Collegues">Collegues</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Family">Family</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Nobody">Nobody</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Friends">{t('a21')}</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Aquantance">{t('a24')}</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Collegues">{t('a23')}</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Nobody">{t('a25')}</CheckboxControl>
 						</Stack>
 					</CheckboxContainer>
 					<Stack my={5} spacing={20} direction="row">
@@ -76,7 +78,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid }) => {
 							type="submit"
 							isLoading={isSubmitting}
 						>
-							Submit
+							{t('submit')}
 						</Button>
 						<Button onClick={handleReset}>Reset</Button>
 					</Stack>

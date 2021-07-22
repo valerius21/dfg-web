@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import React, { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import { Flex, Box, Image, Center, useColorModeValue } from "@chakra-ui/react";
@@ -52,17 +51,6 @@ const Eval: FC<any> = ({ imgURL, value }) => {
 						/>
 					</Center>
 					<Form uid={user as string} pageNumber={+number} />
-					{/* <pre>{JSON.stringify({ user, number, value, imgURL }, null, 2)}</pre>
-					{(+number < 100 ? <Link href={{
-						pathname: '/[user]/[number]',
-						query: {
-							user,
-							number: (+number) + 1
-						}
-					}}>
-						Continue
-					</Link> : <Link href="/done">Continue</Link>)} */}
-
 				</Box>
 			</Flex>
 		</>
