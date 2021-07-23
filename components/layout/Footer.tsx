@@ -15,6 +15,7 @@ export default function Footer() {
 			direction='row'
 			bg={useColorModeValue('gray.50', 'gray.900')}
 			p={4}
+			mb={0}
 			color={useColorModeValue('gray.700', 'gray.200')}>
 			<Container
 				as={Stack}

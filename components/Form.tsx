@@ -66,6 +66,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid }) => {
 							<CheckboxControl name="targetDemographic" value="Collegues">{t('a23')}</CheckboxControl>
 							<CheckboxControl name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
 							<CheckboxControl name="targetDemographic" value="Nobody">{t('a25')}</CheckboxControl>
+							<CheckboxControl name="targetDemographic" value="Everybody">{t('a26')}</CheckboxControl>
 						</Stack>
 					</CheckboxContainer>
 					<Stack my={5} spacing={20} direction="row">
