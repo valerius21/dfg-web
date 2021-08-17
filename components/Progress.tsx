@@ -3,17 +3,11 @@ import { Progress as CProg } from "@chakra-ui/react"
 
 interface ProgressInterface {
 	value: number
+	isLoading: boolean
 }
 
-const Progress: FC<ProgressInterface> = ({ value }) => {
-	const [isLoading, updateLoading] = useState(true)
-
-	useEffect(() => {
-		setTimeout(() => updateLoading(false), 5000)
-	}, [isLoading])
-
+const Progress: FC<ProgressInterface> = ({ isLoading, value }) => {
 	if (isLoading) return <CProg colorScheme="red" isIndeterminate />
-
 	return (
 		<>
 			<CProg colorScheme="red" value={value} />

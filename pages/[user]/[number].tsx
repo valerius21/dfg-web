@@ -1,37 +1,33 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import { GetServerSideProps } from 'next'
-import { Flex, Box, Image, Center, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Box, Spinner, Center, useColorModeValue, Image } from "@chakra-ui/react";
 import Progress from '../../components/Progress'
 import Form from '../../components/Form'
+import { useQuery } from 'react-query';
 
-const fetcher = (url: string, uid: string) => axios.post(url, { uid }).then(res => res.data)
-
-export const getServerSideProps: GetServerSideProps = async context => {
-	const images = [
-		'https://live.staticflickr.com/4008/4376990620_04506b9d6a.jpg',
-		'https://live.staticflickr.com/4010/4376814188_366039075a.jpg',
-	]
-	return {
-		props: {
-			imgURL: images[Math.round(Math.random())],
-			value: Math.floor(Math.random() * 100)
-		}
-	}
-}
-
-const Eval: FC<any> = ({ imgURL, value }) => {
+const Eval: FC<any> = () => {
 	const router = useRouter()
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
-	if (!user || !number) {
-		console.error('Invalid site parameters!', { user, number })
-		return <></>
+	const { isLoading, error, data } = useQuery('images', () => {
+		return fetch(`http://127.0.0.1:8000/images/all/${user}`).then(res => res.json())
+	})
+
+	if (isLoading) {
+		return <Center mt="24">
+			<Spinner size="xl" />
+		</Center>
 	}
+
+
+	if (!user || !number || error || !data) {
+		console.error('Invalid site parameters!', { user, number })
+		return <pre>{JSON.stringify(error)}</pre>
+	}
+
 	return (
 		<>
-			<Progress value={+number} />
+			<Progress value={+number} isLoading={isLoading} />
 			<Flex w="full" alignItems="center" justifyContent="center">
 				<Box
 					bg={colorMode}
@@ -42,15 +38,14 @@ const Eval: FC<any> = ({ imgURL, value }) => {
 					shadow="lg"
 					mt={5}
 					position="relative">
-					<Center>
-						<Image
-							m={2}
-							src={imgURL}
-							alt={`Picture of a based thing`}
-							roundedTop="lg"
-						/>
+					<Center p={5}>
+						{
+							isLoading ? <Spinner size="xl" /> :
+								// eslint-disable-next-line @next/next/no-img-element
+								<Image boxShadow={'md'} borderRadius={'md'} src={data.images[+number - 1].gwdg_url} alt="image" />
+						}
 					</Center>
-					<Form uid={user as string} pageNumber={+number} />
+					<Form uid={user as string} isPrivate={data.images[+number - 1].is_private} imageID={data.images[+number - 1].image_id} pageNumber={+number} />
 				</Box>
 			</Flex>
 		</>

@@ -12,11 +12,14 @@ export const resources = {
 			'a13': 'not possible',
 			'a21': 'Friends',
 			'a22': 'Family',
-			'a23': 'Collegues',
+			'a23': 'Colleagues',
 			'a24': 'Acquaintance',
 			'a25': 'Nobody',
 			'a26': 'Everybody',
 			'submit': 'Submit',
+			'done': 'Done! 🎉',
+			'thanks': 'Thanks for participating.'
+
 		}
 	},
 	de: {
@@ -37,6 +40,8 @@ export const resources = {
 			'a25': 'Niemand',
 			'a26': 'Alle',
 			'submit': 'Weiter',
+			'done': 'Fertig! 🎉',
+			'thanks': 'Vielen Dank fuer Ihre teilnahme.'
 		}
 	}
 }
