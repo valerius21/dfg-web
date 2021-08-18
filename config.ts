@@ -1,1 +1,1 @@
-export const API_URL = process.env.API_URL || 'http://localhost:8000';
+export const API_URL = 'https://c102-236.cloud.gwdg.de/' || 'http://localhost:8000';
