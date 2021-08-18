@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import { Box, Button, Stack, Radio } from "@chakra-ui/react";
 import { useRouter } from 'next/router';
-import { Formik, useFormikContext } from 'formik';
+import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import { API_URL } from 'config';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
@@ -43,7 +43,9 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 			}}
 
 			onSubmit={(values, { resetForm }) => {
-				const payload = {
+				const myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				const raw = JSON.stringify({
 					sensitivity: values.sensitivity,
 					is_private: isPrivate,
 					photo_id: imageID,
@@ -54,10 +56,19 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					friends: values.targetDemographic.indexOf("Friends") !== -1,
 					everybody: values.targetDemographic.indexOf("Everybody") !== -1,
 					nobody: values.targetDemographic.indexOf("Nobody") !== -1,
-				}
+				})
 
-				console.log(JSON.stringify(payload));
-				axios.post('http://127.0.0.1:8000/submit', payload)
+				const requestOptions: any = {
+					method: 'POST',
+					headers: myHeaders,
+					body: raw,
+					redirect: 'follow'
+				};
+
+				fetch(`${API_URL}/api/submit`, requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log('error', error));
 				resetForm()
 				router.push(nextPage)
 			}}

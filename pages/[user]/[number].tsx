@@ -4,13 +4,14 @@ import { Flex, Box, Spinner, Center, useColorModeValue, Image } from "@chakra-ui
 import Progress from '../../components/Progress'
 import Form from '../../components/Form'
 import { useQuery } from 'react-query';
+import { API_URL } from 'config';
 
 const Eval: FC<any> = () => {
 	const router = useRouter()
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
 	const { isLoading, error, data } = useQuery('images', () => {
-		return fetch(`http://127.0.0.1:8000/images/all/${user}`).then(res => res.json())
+		return fetch(`${API_URL}/api/images/${user}`).then(res => res.json())
 	})
 
 	if (isLoading) {
