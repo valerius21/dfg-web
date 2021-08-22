@@ -20,17 +20,9 @@ const Header = () => {
 					<ModalHeader>{t('loginTitle')}</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						<LoginForm />
+						<LoginForm onClose={onClose} />
 					</ModalBody>
-
-					<ModalFooter>
-						<Button mr={3} variant="ghost" size="sm" onClick={onClose}>
-							{t('close')}
-						</Button>
-						<PrimaryButton size="sm" >
-							{t('submit')}
-						</PrimaryButton>
-					</ModalFooter>
+					<ModalFooter />
 				</ModalContent>
 			</Modal>
 		</Flex>
