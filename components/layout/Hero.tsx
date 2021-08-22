@@ -17,11 +17,8 @@ import { nanoid } from "nanoid";
 import { FC } from 'react';
 import { PrimaryButton } from '../PrimaryButton'
 
-interface Props {
-	customUID: boolean
-}
 
-const Hero: FC<Props> = ({ customUID }) => {
+const Hero: FC = () => {
 	const { t } = useTranslation()
 	return (
 		<Container maxW={'7xl'}>

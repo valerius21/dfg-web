@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next';
-import { API_URL } from 'config';
+import { config } from 'config';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
@@ -65,7 +65,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					redirect: 'follow'
 				};
 
-				fetch(`${API_URL}/api/submit`, requestOptions)
+				fetch(`${config.API_URL}/api/submit`, requestOptions)
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
