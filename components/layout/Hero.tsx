@@ -14,8 +14,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link'
 import { nanoid } from "nanoid";
+import { FC } from 'react';
 
-export default function Hero() {
+interface Props {
+	customUID: boolean
+}
+
+const Hero: FC<Props> = ({ customUID }) => {
 	const { t } = useTranslation()
 	return (
 		<Container maxW={'7xl'}>
@@ -34,8 +39,8 @@ export default function Hero() {
 							position={'relative'}
 							_after={{
 								content: "''",
-								width: 'full',
 								height: '30%',
+								width: 'full',
 								position: 'absolute',
 								bottom: 1,
 								left: 0,
@@ -132,3 +137,5 @@ export const Blob = (props: IconProps) => {
 		</Icon>
 	);
 };
+
+export default Hero

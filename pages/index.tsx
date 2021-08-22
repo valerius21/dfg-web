@@ -3,7 +3,8 @@ import Hero from '../components/layout/Hero'
 
 const Home = () => {
   return (
-    <Hero />
+    // <Hero customUID={process.env.CUSTOM_UID} />
+    <Hero customUID={true} /> // TODO: remove this line
   )
 }
 
