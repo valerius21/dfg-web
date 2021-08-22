@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import Link from 'next/link'
 import { nanoid } from "nanoid";
 import { FC } from 'react';
+import { PrimaryButton } from '../PrimaryButton'
 
 interface Props {
 	customUID: boolean
@@ -67,17 +68,9 @@ const Hero: FC<Props> = ({ customUID }) => {
 								number: 1
 							}
 						}} passHref>
-							<Button
-								rounded={'full'}
-								size={'lg'}
-								fontWeight={'normal'}
-								px={6}
-								colorScheme={'red'}
-								bg={'red.400'}
-								color="white"
-								_hover={{ bg: 'red.300' }}>
+							<PrimaryButton>
 								{t('start')}
-							</Button>
+							</PrimaryButton>
 						</Link>
 					</Stack>
 				</Stack>

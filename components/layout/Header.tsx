@@ -1,30 +1,35 @@
 import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { PrimaryButton } from '../PrimaryButton'
+import LoginForm from '../LoginForm'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Header = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const { t } = useTranslation();
+
 	return (
 		<Flex justifyContent={'flex-end'}>
 			<Button size="sm" m={3} onClick={onOpen}>
-				Login with User ID (UID)
+				{t("loginTitle")}
 			</Button>
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
-					<ModalHeader>Login</ModalHeader>
+					<ModalHeader>{t('loginTitle')}</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						bruh
+						<LoginForm />
 					</ModalBody>
 
 					<ModalFooter>
 						<Button mr={3} variant="ghost" size="sm" onClick={onClose}>
-							Close
+							{t('close')}
 						</Button>
-						<Button size="sm">
-							Continue
-						</Button>
+						<PrimaryButton size="sm" >
+							{t('submit')}
+						</PrimaryButton>
 					</ModalFooter>
 				</ModalContent>
 			</Modal>

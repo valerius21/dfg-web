@@ -18,8 +18,9 @@ export const resources = {
 			'a26': 'Everybody',
 			'submit': 'Submit',
 			'done': 'Done! 🎉',
-			'thanks': 'Thanks for participating.'
-
+			'thanks': 'Thanks for participating.',
+			'close': 'Close',
+			'loginTitle': 'Login with User ID (UID)',
 		}
 	},
 	de: {
@@ -41,7 +42,9 @@ export const resources = {
 			'a26': 'Alle',
 			'submit': 'Weiter',
 			'done': 'Fertig! 🎉',
-			'thanks': 'Vielen Dank fuer Ihre teilnahme.'
+			'thanks': 'Vielen Dank fuer Ihre teilnahme.',
+			'close': 'Schliessen',
+			'loginTitle': 'Login mit User ID (UID)',
 		}
 	}
 }
