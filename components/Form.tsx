@@ -45,18 +45,52 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 			onSubmit={(values, { resetForm }) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
-				const raw = JSON.stringify({
-					sensitivity: values.sensitivity,
-					is_private: isPrivate,
-					photo_id: imageID,
-					uid: uid,
+
+				const targetDemographic = values
+				const tdv = {
 					acquaintance: values.targetDemographic.indexOf("Acquaintance") !== -1,
 					colleagues: values.targetDemographic.indexOf("Colleagues") !== -1,
 					family: values.targetDemographic.indexOf("Family") !== -1,
 					friends: values.targetDemographic.indexOf("Friends") !== -1,
 					everybody: values.targetDemographic.indexOf("Everybody") !== -1,
 					nobody: values.targetDemographic.indexOf("Nobody") !== -1,
-				})
+				}
+
+				const payload = {
+					sensitivity: values.sensitivity,
+					is_private: isPrivate,
+					photo_id: imageID,
+					uid: uid,
+					acquaintance: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
+					colleagues: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
+					family: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
+					friends: !tdv.nobody && (tdv.everybody || tdv.friends),
+					everybody: tdv.everybody && !tdv.nobody,
+					nobody: tdv.nobody &&
+						!tdv.everybody &&
+						!tdv.acquaintance &&
+						!tdv.colleagues &&
+						!tdv.family &&
+						!tdv.friends,
+				}
+
+				if (
+					payload.acquaintance ==
+					payload.colleagues ==
+					payload.family ==
+					payload.friends ==
+					payload.everybody ==
+					payload.nobody
+				) {
+					alert('contradiction in selection')
+					console.log(payload)
+					return
+				}
+
+				console.table(payload)
+
+				const raw = JSON.stringify(payload)
+
 
 				const requestOptions: any = {
 					method: 'POST',
@@ -67,14 +101,13 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 
 				fetch(`${config.API_URL}/api/submit`, requestOptions)
 					.then(response => response.text())
-					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 				resetForm()
 				router.push(nextPage)
 			}}
 			validationSchema={validateSchema}
 		>
-			{({ handleSubmit, handleReset, isSubmitting }) => (
+			{({ handleSubmit, handleReset, isSubmitting, values }) => (
 				<Box
 					as="form"
 					px={5}
@@ -89,12 +122,12 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					</RadioGroupControl>
 					<CheckboxContainer mt={4} name="targetDemographic" label={t('questionTwo')}>
 						<Stack spacing="1">
-							<CheckboxControl name="targetDemographic" value="Friends">{t('a21')}</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Aquaintance">{t('a24')}</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Colleagues">{t('a23')}</CheckboxControl>
-							<CheckboxControl name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Friends">{t('a21')}</CheckboxControl>
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Aquaintance">{t('a24')}</CheckboxControl>
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Colleagues">{t('a23')}</CheckboxControl>
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
 							<hr />
-							<CheckboxControl name="targetDemographic" value="Everybody">{t('a26')}</CheckboxControl>
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Everybody">{t('a26')}</CheckboxControl>
 							<hr />
 							<CheckboxControl name="targetDemographic" value="Nobody">{t('a25')}</CheckboxControl>
 						</Stack>
