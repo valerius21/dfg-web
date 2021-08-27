@@ -14,11 +14,15 @@ const DESCRIPTION_EN =
 const CUSTOM_UID =
 	process.env.NEXT_PUBLIC_CUSTOM_UID === "true"
 
+const ACCUMULATE_API_URL =
+	process.env.NEXT_PUBLIC_ACCUMULATE_API_URL === "true"
+
 const config = {
 	API_URL,
 	DESCRIPTION_DE,
 	DESCRIPTION_EN,
 	CUSTOM_UID,
+	ACCUMULATE_API_URL
 }
 
 export {

@@ -5,5 +5,6 @@ declare namespace NodeJS {
 		CUSTOM_UID: boolean;
 		DESCRIPTON_EN: string;
 		DESCRIPTON_DE: string;
+		ACCUMULATE_API_URL: boolean;
 	}
 }

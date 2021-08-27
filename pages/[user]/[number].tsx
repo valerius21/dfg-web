@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import { Flex, Box, Spinner, Center, useColorModeValue, Image } from "@chakra-ui/react";
+import { Flex, Box, Spinner, Center, useColorModeValue, Image, Text } from "@chakra-ui/react";
 import Progress from '../../components/Progress'
 import Form from '../../components/Form'
 import { useQuery } from 'react-query';
@@ -11,7 +11,7 @@ const Eval: FC<any> = () => {
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
 	const { isLoading, error, data } = useQuery('images', () => {
-		return fetch(`${config.API_URL}/api/images/${user}`).then(res => res.json())
+		return fetch(`${config.API_URL}/api/images/${config.ACCUMULATE_API_URL ? 'acc' : 'not-acc'}/${user}`).then(res => res.json())
 	})
 
 	if (isLoading) {
@@ -42,8 +42,21 @@ const Eval: FC<any> = () => {
 					<Center p={5}>
 						{
 							isLoading ? <Spinner size="xl" /> :
-								// eslint-disable-next-line @next/next/no-img-element
-								<Image boxShadow={'md'} borderRadius={'md'} src={data.images[+number - 1].gwdg_url} alt="image" />
+								(
+									<div>
+										<Text>UID:
+											<strong>
+												{user}
+											</strong>
+										</Text>
+										<Text>Submission No:
+											<strong>
+												{number}
+											</strong>
+										</Text>
+										<Image mt={5} boxShadow={'md'} borderRadius={'md'} src={data.images[+number - 1].gwdg_url} alt="image" />
+									</div>
+								)
 						}
 					</Center>
 					<Form uid={user as string} isPrivate={data.images[+number - 1].is_private} imageID={data.images[+number - 1].image_id} pageNumber={+number} />
