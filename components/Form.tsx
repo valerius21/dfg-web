@@ -46,7 +46,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 
-				const targetDemographic = values
 				const tdv = {
 					acquaintance: values.targetDemographic.indexOf("Acquaintance") !== -1,
 					colleagues: values.targetDemographic.indexOf("Colleagues") !== -1,
@@ -74,19 +73,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 						!tdv.friends,
 				}
 
-				if (
-					payload.acquaintance ==
-					payload.colleagues ==
-					payload.family ==
-					payload.friends ==
-					payload.everybody ==
-					payload.nobody
-				) {
-					alert('contradiction in selection')
-					console.log(payload)
-					return
-				}
-
 				console.table(payload)
 
 				const raw = JSON.stringify(payload)
@@ -100,10 +86,21 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 				};
 
 				fetch(`${config.API_URL}/api/submit`, requestOptions)
-					.then(response => response.text())
-					.catch(error => console.log('error', error));
-				resetForm()
-				router.push(nextPage)
+					.then(response => {
+						if (response.status === 400) {
+							throw new Error(t('verficationError'));
+						}
+						response.text()
+					})
+					.then(() => {
+						resetForm()
+						router.push(nextPage)
+					})
+					.catch(error => {
+						console.error('error', error, values)
+						alert(error)
+						resetForm()
+					});
 			}}
 			validationSchema={validateSchema}
 		>

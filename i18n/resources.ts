@@ -23,6 +23,7 @@ export const resources = {
 			'thanks': 'Thanks for participating.',
 			'close': 'Close',
 			'loginTitle': 'Login with User ID (UID)',
+			'verficationError': 'Logical error! Please check your answers for contradictions before submitting!',
 		}
 	},
 	de: {
@@ -47,6 +48,7 @@ export const resources = {
 			'thanks': 'Vielen Dank fuer Ihre teilnahme.',
 			'close': 'Schliessen',
 			'loginTitle': 'Login mit User ID (UID)',
+			'verficationError': 'Logikfehler! Bitte ueberpruefen Sie ihre Antworten auf widersprueche!',
 		}
 	}
 }
