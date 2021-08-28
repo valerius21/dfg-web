@@ -40,7 +40,6 @@ const LoginForm: FC<Props> = ({ onClose }) => {
 					Login
 				</PrimaryButton>
 			</Link>
-			<pre>{JSON.stringify(targetURL, null, 2)}</pre>
 		</Box>
 	)
 }
