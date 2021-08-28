@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile: ['./docker/acc/Dockerfile', './docker/not-acc/Dockerfile']
+        dockerfile: ['ACC', 'NOT_ACC']
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -27,4 +27,4 @@ jobs:
         with:
           push: true
           file: ${{ matrix.dockerfile }}
-          tags: docker.gitlab.gwdg.de/dfg/ui:latest
+          tags: docker.gitlab.gwdg.de/dfg/ui:${{ matrix.dockerfile }}-latest
