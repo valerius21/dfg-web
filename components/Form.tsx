@@ -46,7 +46,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 
-				const tdv = {
+				let tdv = {
 					acquaintance: values.targetDemographic.indexOf("Acquaintance") !== -1,
 					colleagues: values.targetDemographic.indexOf("Colleagues") !== -1,
 					family: values.targetDemographic.indexOf("Family") !== -1,
@@ -55,22 +55,17 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					nobody: values.targetDemographic.indexOf("Nobody") !== -1,
 				}
 
-				const payload = {
+				let payload = {
 					sensitivity: values.sensitivity,
 					is_private: isPrivate,
 					photo_id: imageID,
 					uid: uid,
-					acquaintance: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
-					colleagues: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
-					family: !tdv.nobody && (tdv.everybody || tdv.acquaintance),
-					friends: !tdv.nobody && (tdv.everybody || tdv.friends),
-					everybody: tdv.everybody && !tdv.nobody,
-					nobody: tdv.nobody &&
-						!tdv.everybody &&
-						!tdv.acquaintance &&
-						!tdv.colleagues &&
-						!tdv.family &&
-						!tdv.friends,
+					acquaintance: tdv.acquaintance,
+					colleagues: tdv.acquaintance,
+					family: tdv.acquaintance,
+					friends: tdv.friends,
+					everybody: tdv.everybody,
+					nobody: tdv.nobody
 				}
 
 				console.table(payload)
