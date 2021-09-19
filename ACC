@@ -11,11 +11,13 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
 ENV NEXT_PUBLIC_API_URL="https://c102-236.cloud.gwdg.de"
 ENV NEXT_PUBLIC_CUSTOM_UID=true
 ENV NEXT_PUBLIC_DESCRIPTION_DE="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore commodi tempora quibusdam! Fuga voluptatum obcaecati possimus modi quas mollitia cumque dignissimos eius placeat. Veritatis praesentium vel similique, aut eaque odio!"
 ENV NEXT_PUBLIC_DESCRIPTION_EN="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore commodi tempora quibusdam! Fuga voluptatum obcaecati possimus modi quas mollitia cumque dignissimos eius placeat. Veritatis praesentium vel similique, aut eaque odio!"
 ENV NEXT_PUBLIC_ACCUMULATE_API_URL=true
+
 RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
 
 # Production image, copy all the files and run next
@@ -43,3 +45,4 @@ EXPOSE 3000
 ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["yarn", "start"]
+

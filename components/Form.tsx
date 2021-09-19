@@ -47,12 +47,12 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 				myHeaders.append("Content-Type", "application/json");
 
 				let tdv = {
-					acquaintance: values.targetDemographic.indexOf("Acquaintance") !== -1,
-					colleagues: values.targetDemographic.indexOf("Colleagues") !== -1,
-					family: values.targetDemographic.indexOf("Family") !== -1,
-					friends: values.targetDemographic.indexOf("Friends") !== -1,
-					everybody: values.targetDemographic.indexOf("Everybody") !== -1,
-					nobody: values.targetDemographic.indexOf("Nobody") !== -1,
+					acquaintance: values.targetDemographic.includes("Acquaintance"),
+					colleagues: values.targetDemographic.includes("Colleagues"),
+					family: values.targetDemographic.includes("Family"),
+					friends: values.targetDemographic.includes("Friends"),
+					everybody: values.targetDemographic.includes("Everybody"),
+					nobody: values.targetDemographic.includes("Nobody"),
 				}
 
 				let payload = {
@@ -60,18 +60,10 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					is_private: isPrivate,
 					photo_id: imageID,
 					uid: uid,
-					acquaintance: tdv.acquaintance,
-					colleagues: tdv.acquaintance,
-					family: tdv.acquaintance,
-					friends: tdv.friends,
-					everybody: tdv.everybody,
-					nobody: tdv.nobody
+					...tdv
 				}
 
-				console.table(payload)
-
 				const raw = JSON.stringify(payload)
-
 
 				const requestOptions: any = {
 					method: 'POST',
