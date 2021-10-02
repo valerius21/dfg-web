@@ -15,10 +15,9 @@ interface FormProps {
 	pageNumber: number;
 	uid: string;
 	imageID: number;
-	isPrivate: boolean;
 }
 
-const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
+const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 	const nextPage = `/${uid}/${pageNumber + 1}`
 	const router = useRouter()
 	const { t } = useTranslation()
@@ -57,8 +56,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 
 				let payload = {
 					sensitivity: values.sensitivity,
-					is_private: isPrivate,
-					photo_id: imageID,
+					id: imageID,
 					uid: uid,
 					...tdv
 				}
@@ -72,7 +70,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, isPrivate }) => {
 					redirect: 'follow'
 				};
 
-				fetch(`${config.API_URL}/api/submit`, requestOptions)
+				fetch(`${config.API_URL}/submit`, requestOptions)
 					.then(response => {
 						if (response.status === 400) {
 							throw new Error(t('verficationError'));

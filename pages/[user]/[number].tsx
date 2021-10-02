@@ -11,7 +11,7 @@ const Eval: FC<any> = () => {
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
 	const { isLoading, error, data } = useQuery('images', () => {
-		return fetch(`${config.API_URL}/api/images/${config.ACCUMULATE_API_URL ? 'acc' : 'not-acc'}/${user}`).then(res => res.json())
+		return fetch(`${config.API_URL}/rdm`).then(res => res.json())
 	})
 
 	if (isLoading) {
@@ -54,12 +54,12 @@ const Eval: FC<any> = () => {
 												{number}
 											</strong>
 										</Text>
-										<Image mt={5} boxShadow={'md'} borderRadius={'md'} src={data.images[+number - 1].gwdg_url} alt="image" />
+										<Image mt={5} boxShadow={'md'} borderRadius={'md'} src={data.images[+number - 1].url} alt="image" />
 									</div>
 								)
 						}
 					</Center>
-					<Form uid={user as string} isPrivate={data.images[+number - 1].is_private} imageID={data.images[+number - 1].image_id} pageNumber={+number} />
+					<Form uid={user as string} imageID={data.images[+number - 1].id} pageNumber={+number} />
 				</Box>
 			</Flex>
 		</>
