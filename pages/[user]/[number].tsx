@@ -11,7 +11,8 @@ const Eval: FC<any> = () => {
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
 	const { isLoading, error, data } = useQuery('images', () => {
-		return fetch(`${config.API_URL}/rdm`).then(res => res.json())
+		const endpoint = config.ACCUMULATE_API_URL ? 'acc' : 'rdm'
+		return fetch(`${config.API_URL}/${endpoint}`).then(res => res.json())
 	})
 
 	if (isLoading) {
