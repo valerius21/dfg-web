@@ -101,6 +101,9 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 							<Radio value="1">{t('a11')}</Radio>
 							<Radio value="2">{t('a12')}</Radio>
 							<Radio value="3">{t('a13')}</Radio>
+							<Radio value="4">{t('a14')}</Radio>
+							<Radio value="5">{t('a15')}</Radio>
+							<Radio value="6">{t('a16')}</Radio>
 						</Stack>
 					</RadioGroupControl>
 					<CheckboxContainer mt={4} name="targetDemographic" label={t('questionTwo')}>
