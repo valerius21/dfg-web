@@ -44,14 +44,15 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 			onSubmit={(values, { resetForm }) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
+				let tms = values.targetDemographic.filter(x => x !== '')
 
 				let tdv = {
-					acquaintance: values.targetDemographic.includes("Acquaintance"),
-					colleagues: values.targetDemographic.includes("Colleagues"),
-					family: values.targetDemographic.includes("Family"),
-					friends: values.targetDemographic.includes("Friends"),
-					everybody: values.targetDemographic.includes("Everybody"),
-					nobody: values.targetDemographic.includes("Nobody"),
+					acquaintance: tms.includes("Aquaintance"),
+					colleagues: tms.includes("Colleagues"),
+					family: tms.includes("Family"),
+					friends: tms.includes("Friends"),
+					everybody: tms.includes("Everybody"),
+					nobody: tms.includes("Nobody"),
 				}
 
 				let payload = {
