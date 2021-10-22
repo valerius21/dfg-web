@@ -10,9 +10,13 @@ const Eval: FC<any> = () => {
 	const router = useRouter()
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { user, number } = router.query
-	const { isLoading, error, data } = useQuery('images', () => {
+	const { isLoading, error, data } = useQuery('images', async () => {
 		const endpoint = config.ACCUMULATE_API_URL ? 'acc' : 'rdm'
-		return fetch(`${config.API_URL}/${endpoint}`).then(res => res.json())
+		return await fetch(`/api/${endpoint}`).then(res => {
+			console.log(res)
+			console.log(res)
+			return res.json()
+		})
 	})
 
 	if (isLoading) {

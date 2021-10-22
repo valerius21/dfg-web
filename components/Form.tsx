@@ -71,7 +71,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 					redirect: 'follow'
 				};
 
-				fetch(`${config.API_URL}/submit`, requestOptions)
+				fetch(`/api/submit`, requestOptions)
 					.then(response => {
 						if (response.status === 400) {
 							throw new Error(t('verficationError'));
