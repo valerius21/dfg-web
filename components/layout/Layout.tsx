@@ -1,7 +1,6 @@
 import { Center, Box } from '@chakra-ui/react'
 import { config } from 'config'
 import React, { FC } from 'react'
-import Footer from './Footer'
 import Header from './Header'
 
 const Layout: FC = ({ children }) => {
@@ -17,7 +16,6 @@ const Layout: FC = ({ children }) => {
 					{children}
 				</Box>
 			</Center>
-			<Footer />
 		</Box>
 	)
 }
