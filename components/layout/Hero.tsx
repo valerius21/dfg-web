@@ -18,24 +18,27 @@ import { PrimaryButton } from '../PrimaryButton'
 import { useQuery } from 'react-query';
 import { createUserWithImages } from 'utils/utils';
 
-const Loading = () => (<>
-	<Center>
-		<Stack spacing={3}>
-			<Center>
-				<Spinner
-					thickness="4px"
-					speed="0.65s"
-					emptyColor="gray.200"
-					color="red.400"
-					size="xl"
-				/>
-			</Center>
-			<Text fontSize="4xl" textAlign={'center'}>Getting ready...</Text>
-			<Text fontSize="xs" textAlign={'center'}>This can take some time depending on your internet connection</Text>
-		</Stack>
-	</Center>
+const Loading = () => {
+	const { t } = useTranslation();
+	return (<>
+		<Center>
+			<Stack spacing={3}>
+				<Center>
+					<Spinner
+						thickness="4px"
+						speed="0.65s"
+						emptyColor="gray.200"
+						color="red.400"
+						size="xl"
+					/>
+				</Center>
+				<Text fontSize="4xl" textAlign={'center'}>{t('gettingReady')}</Text>
+				<Text fontSize="xs" textAlign={'center'}>{t('thisCanTakeSomeTime')}</Text>
+			</Stack>
+		</Center>
 
-</>)
+	</>)
+}
 
 
 const Hero: FC = () => {

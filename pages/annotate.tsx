@@ -4,36 +4,31 @@ import { useColorModeValue, Text, Image } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import React from 'react'
-import { useQuery } from 'react-query'
-import { requestUserInformation } from 'utils/utils'
+import useSWR from 'swr'
 import Form from '../components/Form'
 import Done from './done'
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
-			id: context.query.id as string
+			id: context.query.id as string,
 		}
 	}
 }
 
 const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const colorMode = useColorModeValue('white', 'gray.800')
-	const { data, isLoading, isError, error, refetch } = useQuery('getImage', async () => {
-		if (id !== undefined) {
-			// throw new Error("No User ID");
-			return await requestUserInformation(id as string)
-		}
-		return
-	})
+	const { data, error, mutate } = useSWR(`/api/user?id=${id}`, fetcher)
 
-	if (isError) {
+	if (error) {
 		console.error(error)
 		return <>
 			An Error Occured. Please Login or start a new session.
 		</>
 	}
-	if (isLoading) {
+	if (!data) {
 		return <>
 			<Center mt="24">
 				<Spinner size="xl" />
@@ -42,8 +37,7 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 	}
 
 	if (id) {
-		refetch()
-		const { users_by_pk: { images, next_index: nextIndex } } = data
+		const { users_by_pk: { images, next_index: nextIndex } } = data.data
 		if (nextIndex === 101) return <Done />
 
 
@@ -80,7 +74,7 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 							uid={id as string}
 							imageID={images[nextIndex - 1].id}
 							pageNumber={nextIndex as number}
-							refetch={refetch}
+							refetch={mutate}
 						/>
 					</Box>
 				</Flex>

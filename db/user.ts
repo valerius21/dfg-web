@@ -8,12 +8,14 @@ interface User {
   next_index: number;
 }
 
-const isAccumulating = process.env.NEXT_PUBLIC_ACCUMULATE_API_URL;
-
-if (!isAccumulating) {
+if (!process.env.NEXT_PUBLIC_ACCUMULATE_API_URL) {
   console.error("NEXT_PUBLIC_ACCUMULATE_API_URL is not set");
   process.exit(1);
 }
+
+const isAccumulating = process.env.NEXT_PUBLIC_ACCUMULATE_API_URL == "true";
+
+console.log(`Using ${isAccumulating ? "accumulating" : "random"} API`);
 
 const generateId = () => uuid();
 
