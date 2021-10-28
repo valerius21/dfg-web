@@ -4,6 +4,7 @@ import _ from "lodash"
 import { aggregation, insert_submission, private_images_query, public_images_query } from "./queries"
 import { exp_is_uuid_private } from "./exp_submission"
 import { checkSubmission, Submission } from "./submission"
+import { ImageInterface } from "./types"
 
 
 if (!process.env.NEXT_GRAPHQL_URL) {
@@ -39,7 +40,7 @@ export const getPublicImages = async () => {
 	return data.public
 }
 
-export const getRandomImageSet = async () => {
+export const getRandomImageSet = async (): Promise<ImageInterface> => {
 	let privateImages = await getPrivateImages()
 	let publicImages = await getPublicImages()
 
@@ -61,7 +62,7 @@ export const getRandomImageSet = async () => {
 		}
 	})
 
-	return randoms
+	return { images: randoms }
 }
 
 const determineURL = async (uuid: string, privateImages: any[], publicImages: any[]): Promise<string> => {
@@ -75,7 +76,7 @@ const determineURL = async (uuid: string, privateImages: any[], publicImages: an
 	return `${IMAGE_SERVER}/public/${filename}`
 }
 
-export const getAccumulatedSet = async () => {
+export const getAccumulatedSet = async (): Promise<ImageInterface> => {
 	const { data: doc } = await Client.query({
 		query: aggregation
 	})
@@ -101,7 +102,7 @@ export const getAccumulatedSet = async () => {
 		}
 	})
 
-	return Promise.all(res)
+	return { images: await Promise.all(res) }
 }
 
 const insertSubmission = async (submission: Submission) => {
@@ -120,8 +121,6 @@ const insertSubmission = async (submission: Submission) => {
 		public_picture: publicID,
 		is_private: isPrivate
 	}
-
-	console.log(values)
 
 	return await Client.mutate({
 		mutation: insert_submission,

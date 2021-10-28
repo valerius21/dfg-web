@@ -15,24 +15,20 @@ interface FormProps {
 	pageNumber: number;
 	uid: string;
 	imageID: number;
+	refetch: any
 }
 
-const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
-	const nextPage = `/${uid}/${pageNumber + 1}`
+const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
 	const router = useRouter()
 	const { t } = useTranslation()
 
-	// prefetching the next page
 	useEffect(() => {
-		const { number } = router.query
-		let pNo = parseInt(number as string)
-		if (pNo > 100) {
+		if (pageNumber > 100) {
 			// redirect to done after 100 submits
 			router.push('/done')
 			return
 		}
-		router.prefetch(nextPage);
-	}, [nextPage, router])
+	}, [pageNumber, router])
 
 	return (
 		<Formik
@@ -64,11 +60,11 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 
 				const raw = JSON.stringify(payload)
 
-				const requestOptions: any = {
+				const requestOptions: RequestInit = {
 					method: 'POST',
 					headers: myHeaders,
 					body: raw,
-					redirect: 'follow'
+					redirect: 'follow',
 				};
 
 				fetch(`/api/submit`, requestOptions)
@@ -80,7 +76,9 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID }) => {
 					})
 					.then(() => {
 						resetForm()
-						router.push(nextPage)
+						// TODO: refetch
+						refetch()
+						// router.push(nextPage)
 					})
 					.catch(error => {
 						console.error('error', error, values)

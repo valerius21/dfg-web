@@ -5,22 +5,43 @@ import {
 	Box,
 	Heading,
 	Text,
-	Button,
+	Center,
 	Icon,
 	IconProps,
-	useColorModeValue,
+	Spinner,
 	Image
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link'
-import { nanoid } from "nanoid";
 import { FC } from 'react';
 import { PrimaryButton } from '../PrimaryButton'
+import { useQuery } from 'react-query';
+import { createUserWithImages } from 'utils/utils';
+
+const Loading = () => (<>
+	<Center>
+		<Stack spacing={3}>
+			<Center>
+				<Spinner
+					thickness="4px"
+					speed="0.65s"
+					emptyColor="gray.200"
+					color="red.400"
+					size="xl"
+				/>
+			</Center>
+			<Text fontSize="4xl" textAlign={'center'}>Getting ready...</Text>
+			<Text fontSize="xs" textAlign={'center'}>This can take some time depending on your internet connection</Text>
+		</Stack>
+	</Center>
+
+</>)
 
 
 const Hero: FC = () => {
 	const { t } = useTranslation()
-	return (
+	const { isLoading, isError, data } = useQuery('createUser', createUserWithImages)
+	return (isLoading ? <Loading /> : isError ? <div>Database Error</div> :
 		<Container maxW={'7xl'}>
 			<Stack
 				align={'center'}
@@ -58,17 +79,24 @@ const Hero: FC = () => {
 					<Stack
 						spacing={{ base: 4, sm: 6 }}
 						direction={{ base: 'column', sm: 'row' }}>
-						<Link href={{
-							pathname: '/[user]/[number]',
-							query: {
-								user: nanoid(),
-								number: 1
-							}
-						}} passHref>
-							<PrimaryButton>
+						{!data && isLoading &&
+							<PrimaryButton isLoading={true}>
 								{t('start')}
 							</PrimaryButton>
-						</Link>
+						}
+						{
+							data && !isLoading && !isError &&
+							<Link href={{
+								pathname: `/annotate`,
+								query: {
+									id: data.insert_users_one.id,
+								}
+							}} passHref>
+								<PrimaryButton>
+									{t('start')}
+								</PrimaryButton>
+							</Link>
+						}
 					</Stack>
 				</Stack>
 				<Flex
@@ -84,7 +112,7 @@ const Hero: FC = () => {
 						top={'-20%'}
 						left={0}
 						zIndex={-1}
-						color={useColorModeValue('red.50', 'red.400')}
+						color={'red.50'}
 					/>
 					<Box
 						position={'relative'}

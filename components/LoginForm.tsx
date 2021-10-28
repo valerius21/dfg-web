@@ -1,22 +1,29 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/layout'
-import { PrimaryButton } from '../components/PrimaryButton'
+import PrimaryButton from '../components/PrimaryButton'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
 import { Stack, Input, NumberInput, NumberInputField } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 interface Props {
 	onClose: any
 }
 
-const LoginForm: FC<Props> = ({ onClose }) => {
-	const [targetURL, setTargetURL] = useState<string>('')
-	const [uid, setUID] = useState<string>('')
-	const [page, setPage] = useState<string>('')
 
-	useEffect(() => {
-		setTargetURL(`${window.location.origin}/${uid}/${page}`)
-	}, [uid, page])
+const LoginForm: FC<Props> = ({ onClose }) => {
+	const [uid, setUID] = useState<string>('')
+	const router = useRouter()
+
+	const handleClick = () => {
+		router.push({
+			pathname: '/annotate',
+			query: {
+				id: uid
+			}
+		})
+		onClose()
+	}
+
 
 	return (
 		<Box
@@ -24,22 +31,14 @@ const LoginForm: FC<Props> = ({ onClose }) => {
 		>
 			<Stack my={5} spacing={5} >
 				<Input placeholder="UID" name="uid" onChange={(e) => setUID(e.target.value)} />
-				<NumberInput>
-					<NumberInputField onChange={(e) => setPage(e.target.value)} placeholder="Next submission ID" name="nextSubmissionID" />
-				</NumberInput>
 			</Stack>
-			<Link
-				href={targetURL!}
-				passHref
+			<PrimaryButton
+				size='sm'
+				isDisabled={!uid}
+				onClick={handleClick}
 			>
-				<PrimaryButton
-					size='sm'
-					isDisabled={!uid || !page}
-					onClick={onClose}
-				>
-					Login
-				</PrimaryButton>
-			</Link>
+				Login
+			</PrimaryButton>
 		</Box>
 	)
 }

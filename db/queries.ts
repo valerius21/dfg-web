@@ -46,3 +46,33 @@ mutation InsertSubmission($acquaintance: Boolean, $colleagues: Boolean = false, 
   }
 }
 `
+
+// TODO: delete UID
+export const add_user = gql`
+mutation UserAdd($images: jsonb!, $id: uuid!) {
+  insert_users_one(object: {id: $id, next_index: 1, images: $images}) { # TODO: generate ID
+    id
+    images
+    next_index
+  }
+}
+`
+
+export const get_user_info = gql`
+query GetUserInfo($id: uuid!) {
+  users_by_pk(id: $id) {
+    images
+    id
+    next_index
+  }
+}
+`
+
+export const increment_user_submissions = gql`
+mutation IncrementUserSubmission($id: uuid!) {
+  update_users_by_pk(pk_columns: {id: $id}, _inc: {next_index: 1}) {
+    next_index
+    id
+  }
+}
+`
