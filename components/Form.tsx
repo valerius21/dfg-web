@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { attentionCheckState, Check } from 'pages/annotate';
 
 const validateSchema = Yup.object({
@@ -21,6 +21,7 @@ interface FormProps {
 	isCheck: boolean;
 }
 
+
 const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => {
 	const router = useRouter()
 	const { t } = useTranslation()
@@ -28,12 +29,11 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 	const [attentionCheck, setAttentionCheck] = useRecoilState(attentionCheckState)
 
 	useEffect(() => {
-		if (pageNumber > 100) {
+		if (pageNumber > 100)
 			// redirect to done after 100 submits
 			router.push('/done')
-			return
-		}
 	}, [pageNumber, router])
+
 
 	return (
 		<Formik
@@ -43,20 +43,31 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 			}}
 
 			onSubmit={(values, { resetForm }) => {
+
+				const fetchError = (error: any) => {
+					console.error('error', error, values)
+					alert(error)
+					resetForm()
+				}
+
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
+
 				let tms = values.targetDemographic.filter(x => x !== '')
+
 				if (isCheck) {
 					const pass = values.sensitivity == '4'
 
 					// update state
 					const currentCheck = attentionCheck.checks.find(x => x.imageID === imageID)
+
 					if (currentCheck) {
 						const newCheck: Check = {
 							...currentCheck,
 							checked: true,
 							pass,
 						}
+
 						// find index to update the checks
 						const index = attentionCheck.checks.indexOf(currentCheck)
 						let checks = [...attentionCheck.checks] // copy that is not read only
@@ -66,19 +77,20 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 							checks,
 							currentPage: pageNumber - 1,
 						}
+
 						setAttentionCheck(updatedChecks)
 					}
-					const payload = attentionCheck
-					const raw = JSON.stringify(payload)
 
-					const requestOptions: RequestInit = {
+					const attentionPayload = attentionCheck
+					const rawAttention = JSON.stringify(attentionPayload)
+					const attentionRequestOptions: RequestInit = {
 						method: 'POST',
 						headers: myHeaders,
-						body: raw,
+						body: rawAttention,
 						redirect: 'follow'
 					}
 
-					fetch(`/api/attention`, requestOptions)
+					fetch(`/api/attention`, attentionRequestOptions)
 						.then(response => {
 							if (response.status === 400) {
 								throw new Error('Attention Check Request Format Error');
@@ -89,11 +101,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 							resetForm()
 							refetch()
 						})
-						.catch(error => {
-							console.error('error', error, values)
-							alert(error)
-							resetForm()
-						});
+						.catch(fetchError);
 					return
 				}
 
@@ -137,11 +145,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						resetForm()
 						refetch()
 					})
-					.catch(error => {
-						console.error('error', error, values)
-						alert(error)
-						resetForm()
-					});
+					.catch(fetchError);
 			}}
 			validationSchema={validateSchema}
 		>
