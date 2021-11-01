@@ -108,7 +108,12 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 
 		const { checks } = attentionCheck
 		const check = checks.find(({ page }) => page === nextIndex - 1)
-		const isCheck = !!check
+		const isCheck = () => {
+			if (check) {
+				return !check.checked
+			}
+			return false
+		}
 
 		return (
 			<>
@@ -134,17 +139,17 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 									mt={5}
 									boxShadow="md"
 									borderRadius='md'
-									src={isCheck && !check.checked ? check.imageURL : images[nextIndex - 1].url}
+									src={isCheck() ? check!.imageURL : images[nextIndex - 1].url}
 									alt='Image'
 								/>
 							</div>
 						</Center>
 						<Form
 							uid={id as string}
-							imageID={isCheck && !check.checked ? check.imageID : images[nextIndex - 1].id}
+							imageID={isCheck() ? check!.imageID : images[nextIndex - 1].id}
 							pageNumber={nextIndex as number}
 							refetch={mutate}
-							isCheck={isCheck && !check.checked}
+							isCheck={isCheck()}
 						/>
 					</Box>
 				</Flex>
