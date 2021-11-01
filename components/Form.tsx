@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next';
-import { config } from 'config';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),

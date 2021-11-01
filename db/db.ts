@@ -44,13 +44,17 @@ export const getRandomImageSet = async (): Promise<ImageInterface> => {
 	let privateImages = await getPrivateImages()
 	let publicImages = await getPublicImages()
 
-	privateImages = _.shuffle(privateImages)
-	publicImages = _.shuffle(publicImages)
+	privateImages = _.shuffle(_.uniqBy(privateImages, 'id'))
+	publicImages = _.shuffle(_.uniqBy(publicImages, 'id'))
 
 	privateImages = _.take(privateImages, 50)
 	publicImages = _.take(publicImages, 50)
 
 	let randoms = _.shuffle([...privateImages, ...publicImages])
+
+	if (randoms.length < 100) {
+		throw new Error("Less than 100 images!");
+	}
 
 	randoms = randoms.map((image: any) => {
 		const url = `${IMAGE_SERVER}/${image.__typename === 'private' ? 'private' : 'public'}/${image.filename}`
@@ -80,20 +84,48 @@ export const getAccumulatedSet = async (): Promise<ImageInterface> => {
 	const { data: doc } = await Client.query({
 		query: aggregation
 	})
+
 	const { private: priv, public: publ } = doc
 
+	// get all images
+	let privateImages = await getPrivateImages()
+	let publicImages = await getPublicImages()
+
+	// filter for 1 <= submissions <= 40
 	let _private = priv.filter((image: any) => (image.submissions_aggregate.aggregate.count) <= 40 && 1 <= image.submissions_aggregate.aggregate.count)
 	let _public = publ.filter((image: any) => (image.submissions_aggregate.aggregate.count) <= 40 && 1 <= image.submissions_aggregate.aggregate.count)
 
+	// add the rest of the list to the filtered ones [<filtered>, <rest>]
 	_private = _private.concat(priv)
 	_public = _public.concat(publ)
 
+	// take the first 50
 	_private = _.take(_private, 50)
-
-	const privateImages = await getPrivateImages()
-	const publicImages = await getPublicImages()
-
 	_public = _.take(_public, 50)
+
+	// check for uniqueness
+	_private = _.uniqBy(_private, 'id')
+	_public = _.uniqBy(_public, 'id')
+
+	// shuffle all images
+	privateImages = _.shuffle(privateImages)
+	publicImages = _.shuffle(publicImages)
+
+	// concatinate randoms with uniques
+	_private = _private.concat(privateImages)
+	_public = _public.concat(publicImages)
+
+	// take the first 50
+	_private = _.take(_private, 50)
+	_public = _.take(_public, 50)
+
+	// check for uniqueness
+	_private = _.uniqBy(_private, 'id')
+	_public = _.uniqBy(_public, 'id')
+
+	if (_private.length < 50 || _public.length < 50) {
+		throw new Error("Less than 50 images!")
+	}
 
 	const res = _.shuffle([..._private, ..._public]).map(async image => {
 		return {
