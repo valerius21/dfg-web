@@ -3,7 +3,8 @@ import { Progress } from '@chakra-ui/progress'
 import { useColorModeValue, Text, Image } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { atom, useRecoilState } from 'recoil'
 import useSWR from 'swr'
 import Form from '../components/Form'
 import Done from './done'
@@ -18,9 +19,74 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 }
 
+export interface Check {
+	pass: boolean,
+	imageID: string,
+	imageURL: string,
+	page: number,
+	checked: boolean
+}
+export interface AttentionCheck {
+	uid: string,
+	currentPage: number, // redundant
+	checks: Check[]
+}
+
+export const attentionCheckState = atom<AttentionCheck>({
+	key: 'att-check',
+	default: {
+		uid: '',
+		currentPage: -1,
+		checks: [{
+			pass: false,
+			imageID: 'att_0',
+			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4327805618_a2b1c48f5a.jpg',
+			page: 25,
+			checked: false
+		},
+		{
+			pass: false,
+			imageID: 'att_1',
+			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4363222502_9828d7b93c.jpg',
+			checked: false,
+			page: 50
+		},
+		{
+			pass: false,
+			imageID: 'att_2',
+			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4380717531_94abf4986c.jpg',
+			checked: false,
+			page: 75
+		}]
+	}
+})
+
 const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const colorMode = useColorModeValue('white', 'gray.800')
 	const { data, error, mutate } = useSWR(`/api/user?id=${id}`, fetcher)
+	const [attentionCheck, setAttentionCheck] = useRecoilState(attentionCheckState)
+
+	// initialize att-check state
+	useEffect(() => {
+		if (id && !attentionCheck.uid) {
+			setAttentionCheck({
+				...attentionCheck,
+				uid: id,
+			})
+		}
+	}, [attentionCheck, id, setAttentionCheck])
+
+	// update att-check current page
+	useEffect(() => {
+		if (data && data.data && id && attentionCheck.currentPage === -1) {
+			const { users_by_pk: { next_index: nextIndex } } = data.data
+			setAttentionCheck({
+				...attentionCheck,
+				currentPage: nextIndex as number - 1
+			})
+		}
+	}, [attentionCheck, data, id, setAttentionCheck])
+
 
 	if (error) {
 		console.error(error)
@@ -40,6 +106,9 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 		const { users_by_pk: { images, next_index: nextIndex } } = data.data
 		if (nextIndex === 101) return <Done />
 
+		const { checks } = attentionCheck
+		const check = checks.find(({ page }) => page === nextIndex - 1)
+		const isCheck = !!check
 
 		return (
 			<>
@@ -65,16 +134,17 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 									mt={5}
 									boxShadow="md"
 									borderRadius='md'
-									src={images[nextIndex - 1].url}
+									src={isCheck && !check.checked ? check.imageURL : images[nextIndex - 1].url}
 									alt='Image'
 								/>
 							</div>
 						</Center>
 						<Form
 							uid={id as string}
-							imageID={images[nextIndex - 1].id}
+							imageID={isCheck && !check.checked ? check.imageID : images[nextIndex - 1].id}
 							pageNumber={nextIndex as number}
 							refetch={mutate}
+							isCheck={isCheck && !check.checked}
 						/>
 					</Box>
 				</Flex>

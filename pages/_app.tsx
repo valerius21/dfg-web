@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Layout from '../components/layout/Layout'
 import '../i18n/i18n'
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,14 +21,16 @@ const queryClient = new QueryClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </RecoilRoot>
   )
 }
 export default MyApp

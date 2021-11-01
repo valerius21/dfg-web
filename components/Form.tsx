@@ -5,21 +5,27 @@ import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { attentionCheckState, Check } from 'pages/annotate';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
 	targetDemographic: Yup.array().min(1),
 });
+
 interface FormProps {
 	pageNumber: number;
 	uid: string;
-	imageID: number;
-	refetch: any
+	imageID: number | string;
+	refetch: any;
+	isCheck: boolean;
 }
 
-const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
+const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => {
 	const router = useRouter()
 	const { t } = useTranslation()
+
+	const [attentionCheck, setAttentionCheck] = useRecoilState(attentionCheckState)
 
 	useEffect(() => {
 		if (pageNumber > 100) {
@@ -40,6 +46,56 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 				let tms = values.targetDemographic.filter(x => x !== '')
+				if (isCheck) {
+					const pass = values.sensitivity == '4'
+
+					// update state
+					const currentCheck = attentionCheck.checks.find(x => x.imageID === imageID)
+					if (currentCheck) {
+						const newCheck: Check = {
+							...currentCheck,
+							checked: true,
+							pass,
+						}
+						// find index to update the checks
+						const index = attentionCheck.checks.indexOf(currentCheck)
+						let checks = [...attentionCheck.checks] // copy that is not read only
+						checks[index] = newCheck
+						const updatedChecks = {
+							...attentionCheck,
+							checks,
+							currentPage: pageNumber - 1,
+						}
+						setAttentionCheck(updatedChecks)
+					}
+					const payload = attentionCheck
+					const raw = JSON.stringify(payload)
+
+					const requestOptions: RequestInit = {
+						method: 'POST',
+						headers: myHeaders,
+						body: raw,
+						redirect: 'follow'
+					}
+
+					fetch(`/api/attention`, requestOptions)
+						.then(response => {
+							if (response.status === 400) {
+								throw new Error('Attention Check Request Format Error');
+							}
+							response.text()
+						})
+						.then(() => {
+							resetForm()
+							refetch()
+						})
+						.catch(error => {
+							console.error('error', error, values)
+							alert(error)
+							resetForm()
+						});
+					return
+				}
 
 				let tdv = {
 					acquaintance: tms.includes("Aquaintance"),
@@ -74,10 +130,12 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
 						response.text()
 					})
 					.then(() => {
+						setAttentionCheck({
+							...attentionCheck,
+							currentPage: pageNumber - 1,
+						})
 						resetForm()
-						// TODO: refetch
 						refetch()
-						// router.push(nextPage)
 					})
 					.catch(error => {
 						console.error('error', error, values)
@@ -93,13 +151,18 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
 					px={5}
 					onSubmit={handleSubmit as any}
 				>
-					<RadioGroupControl mt={4} name="sensitivity" label={t('questionOne')}>
+					<RadioGroupControl
+						mt={4}
+						name="sensitivity"
+						label={
+							isCheck ? t('check') : t('questionOne')
+						}>
 						<Stack spacing="1">
 
 							<Radio value="1">{t('a11')}</Radio>
 							<Radio value="2">{t('a13')}</Radio>
 							<Radio value="3">{t('a12')}</Radio>
-							<Radio value="4">{t('a14')}</Radio>
+							<Radio value="4">{isCheck ? 'attention' : t('a14')}</Radio>
 							<Radio value="5">{t('a15')}</Radio>
 							<Radio value="6">{t('a16')}</Radio>
 						</Stack>
@@ -128,7 +191,10 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch }) => {
 						>
 							{t('submit')}
 						</Button>
-						<Button onClick={handleReset}>Reset</Button>
+						<Button onClick={() => {
+							handleReset()
+							refetch()
+						}}>Reset</Button>
 					</Stack>
 				</Box>
 			)}

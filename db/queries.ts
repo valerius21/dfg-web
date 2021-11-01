@@ -76,3 +76,15 @@ mutation IncrementUserSubmission($id: uuid!) {
   }
 }
 `
+
+export const update_attention_checks = gql`
+mutation UpdateAttentionChecks($uid: uuid!, $att_0: Boolean!, $att_1: Boolean!, $att_2: Boolean!) {
+  update_users_by_pk(pk_columns: {id: $uid}, _set: {att_0: $att_0, att_1: $att_1, att_2: $att_2}) {
+    att_0
+    att_1
+    id
+    att_2
+    next_index
+  }
+}
+`
