@@ -29,10 +29,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 	const { t } = useTranslation()
 	const attentionURL = `/api/dbAttention?uid=${uid}`
 
-	fetcher(attentionURL).then(res => {
-		logger.info(res)
-	}).catch(err => { logger.error(err) })
-
 	const [shouldRefetch, setShouldRefetch] = useState(true)
 
 	const [attentionCheck, setAttentionCheck] = useRecoilState(attentionCheckState)
