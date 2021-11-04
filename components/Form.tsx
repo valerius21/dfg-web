@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 import { attentionCheckState, Check } from 'pages/annotate';
 import { logger } from 'utils/logger';
-import useSWR from 'swr';
 import { fetcher } from 'utils/utils';
 
 const validateSchema = Yup.object({
@@ -29,10 +28,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 	const router = useRouter()
 	const { t } = useTranslation()
 	const attentionURL = `/api/dbAttention?uid=${uid}`
-
-	// const { data, error, mutate } = useSWR(attentionURL, fetcher, {
-	// 	revalidateOnFocus: false,
-	// })
 
 	fetcher(attentionURL).then(res => {
 		logger.info(res)
@@ -82,12 +77,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 		fn()
 	}, [attentionCheck, attentionURL, checks, setAttentionCheck, shouldRefetch, uid])
 
-	// if (error) {
-	// 	logger.error(error)
-	// 	return (<>Error on User fetching.</>)
-	// }
-
-
 	return (
 		<Formik
 			initialValues={{
@@ -112,21 +101,21 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 					const pass = isQuestionOne ? values.sensitivity == '6' : tms.includes("Everybody")
 
 					// update state
-					const currentCheck = attentionCheck.checks.find(x => x.imageID === imageID)
+					const innerCheck = attentionCheck.checks.find(x => x.imageID === imageID)
 
 					const newCheck: Check = {
-						...currentCheck!,
+						...innerCheck!,
 						checked: true,
 						pass,
 					}
 
 					// find index to update the checks
-					const index = attentionCheck.checks.indexOf(currentCheck!)
-					let checks = [...attentionCheck.checks] // copy that is not read only
-					checks[index] = newCheck
+					const index = attentionCheck.checks.indexOf(innerCheck!)
+					let currentChecks = [...attentionCheck.checks] // copy that is not read only
+					currentChecks[index] = newCheck
 					const updatedChecks = {
 						...attentionCheck,
-						checks,
+						checks: currentChecks,
 						currentPage: pageNumber - 1,
 					}
 					setAttentionCheck(updatedChecks)
@@ -151,7 +140,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						.then(() => {
 							resetForm()
 							refetch()
-							// mutate(attentionURL)
 						})
 						.catch(fetchError);
 					setShouldRefetch(true)
@@ -197,7 +185,6 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						})
 						resetForm()
 						refetch()
-						// mutate(attentionURL)
 					})
 					.catch(fetchError);
 				setShouldRefetch(true)
