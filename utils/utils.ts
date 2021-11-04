@@ -3,3 +3,5 @@ export const createUserWithImages = async () => {
   const { data } = await res.json();
   return data;
 };
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json())

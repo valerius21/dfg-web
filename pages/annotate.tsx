@@ -1,15 +1,16 @@
-import { Box, Center, Flex } from '@chakra-ui/layout'
+import { Box, Center, Code, Flex, Spacer } from '@chakra-ui/layout'
 import { Progress } from '@chakra-ui/progress'
-import { useColorModeValue, Text, Image } from '@chakra-ui/react'
+import { useColorModeValue, Text, Image, Stack } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import React, { useEffect } from 'react'
 import { atom, useRecoilState } from 'recoil'
 import useSWR from 'swr'
+import { logger } from 'utils/logger'
+import { fetcher } from 'utils/utils'
 import Form from '../components/Form'
 import Done from './done'
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
@@ -24,7 +25,8 @@ export interface Check {
 	imageID: string,
 	imageURL: string,
 	page: number,
-	checked: boolean
+	checked: boolean,
+	isQuestionOne: boolean
 }
 export interface AttentionCheck {
 	uid: string,
@@ -40,23 +42,26 @@ export const attentionCheckState = atom<AttentionCheck>({
 		checks: [{
 			pass: false,
 			imageID: 'att_0',
-			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4327805618_a2b1c48f5a.jpg',
+			imageURL: 'https://c102-251.cloud.gwdg.de/public/4327805618_a2b1c48f5a.jpg',
 			page: 25,
-			checked: false
+			checked: false,
+			isQuestionOne: true
 		},
 		{
 			pass: false,
 			imageID: 'att_1',
-			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4363222502_9828d7b93c.jpg',
+			imageURL: 'https://c102-251.cloud.gwdg.de/private/4363222502_9828d7b93c.jpg',
 			checked: false,
-			page: 50
+			page: 50,
+			isQuestionOne: true
 		},
 		{
 			pass: false,
 			imageID: 'att_2',
-			imageURL: 'https://c102-251.cloud.gwdg.de/attention/4380717531_94abf4986c.jpg',
+			imageURL: 'https://c102-251.cloud.gwdg.de/private/4380717531_94abf4986c.jpg',
 			checked: false,
-			page: 75
+			page: 75,
+			isQuestionOne: false
 		}]
 	}
 })
@@ -89,7 +94,7 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 
 
 	if (error) {
-		console.error(error)
+		logger.error(error)
 		return <>
 			An Error Occured. Please Login or start a new session.
 		</>
@@ -130,19 +135,20 @@ const Annotate = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>
 						position="relative"
 					>
 						<Center p={5}>
-							<div>
-								UID:
-								<Text fontWeight='bold'> {id}</Text>
-								Submission No.:
-								<Text fontWeight='bold'>{nextIndex as number - 1}</Text>
+							<Stack spacing={3}>
+								<Text>UID:</Text>
+								<Code> {id}</Code>
+								<Text>Submission No.:</Text>
+								<Code>{nextIndex as number - 1}</Code>
+								<Spacer />
+								<Spacer />
 								<Image
-									mt={5}
 									boxShadow="md"
 									borderRadius='md'
 									src={isCheck() ? check!.imageURL : images[nextIndex - 1].url}
 									alt='Image'
 								/>
-							</div>
+							</Stack>
 						</Center>
 						<Form
 							uid={id as string}

@@ -88,3 +88,13 @@ mutation UpdateAttentionChecks($uid: uuid!, $att_0: Boolean!, $att_1: Boolean!, 
   }
 }
 `
+
+export const db_attention_state = gql`
+query DBAttention($uid: uuid!) {
+  users_by_pk(id: $uid) {
+    att_0
+    att_2
+    att_1
+  }
+}
+`

@@ -33,7 +33,8 @@ export const resources = {
       gettingReady: "Getting ready...",
       thisCanTakeSomeTime:
         "This can take some time depending on your connection...",
-      check: "You must enter, what is said in the picture."
+      checkOne: `How likely is that you are paying attention, please select "not possible"`,
+      checkTwo: `How likely is that you are paying attention, please select "everybody"`,
     },
   },
   de: {
@@ -67,9 +68,10 @@ export const resources = {
       verficationError:
         "Logikfehler! Bitte ueberpruefen Sie ihre Antworten auf widersprueche!",
       gettingReady: "Einen Moment bitte...",
-      check: "Wählen Sie das in dem Bild erwähnte Wort aus.",
       thisCanTakeSomeTime:
         "Abhängig von der Verbindung kann dies einige Sekunden in Anspruch nehmen...",
+      checkOne: `Wie wahrscheinlich ist es, dass Sie aufmerksam sind? Bitte wählen Sie "nicht entscheidbar" aus.`,
+      checkTwo: `Wie wahrscheinlich ist es, dass Sie aufmerksam sind? Bitte wählen Sie "Alle" aus.`,
     },
   },
 };

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Button, ButtonProps } from '@chakra-ui/react'
 
-const PrimaryButton: FC<ButtonProps> = ({ ...props }) => {
+const PB: FC<ButtonProps> = ({ ...props }) => {
 	return (
 		<Button
 			rounded={'full'}
@@ -16,6 +16,10 @@ const PrimaryButton: FC<ButtonProps> = ({ ...props }) => {
 		/>
 	)
 }
+
+const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+	return <PB {...props} />
+})
 
 export {
 	PrimaryButton
