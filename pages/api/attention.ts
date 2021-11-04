@@ -5,6 +5,8 @@ import { Client } from "db/db";
 import { db_attention_state, update_attention_checks } from "db/queries";
 import { logger } from "utils/logger";
 
+// update attention checks depending on page and user
+
 const oldAttention = async (uid: string, req: NextApiRequest, res: NextApiResponse) => {
 	const { data, error } = await Client.query({
 		query: db_attention_state,
