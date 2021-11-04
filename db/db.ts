@@ -5,15 +5,16 @@ import { aggregation, insert_submission, private_images_query, public_images_que
 import { exp_is_uuid_private } from "./exp_submission"
 import { checkSubmission, Submission } from "./submission"
 import { ImageInterface } from "./types"
+import { logger } from "utils/logger"
 
 
 if (!process.env.NEXT_GRAPHQL_URL) {
-	console.error("GRAPHQL_URL is not set")
+	logger.error("GRAPHQL_URL is not set")
 	process.exit(1)
 }
 
 if (!process.env.NEXT_IMAGE_SERVER) {
-	console.error("IMAGE_SERVER is not set")
+	logger.error("IMAGE_SERVER is not set")
 	process.exit(1)
 }
 
@@ -73,8 +74,8 @@ const determineURL = async (uuid: string, privateImages: any[], publicImages: an
 	const isPrivate = await exp_is_uuid_private(uuid)
 
 	if (isPrivate) {
-		const { filename } = privateImages.find((image: any) => image.id === uuid)
-		return `${IMAGE_SERVER}/private/${filename}`
+		const { filename: file } = privateImages.find((image: any) => image.id === uuid)
+		return `${IMAGE_SERVER}/private/${file}`
 	}
 	const { filename } = publicImages.find((image: any) => image.id === uuid)
 	return `${IMAGE_SERVER}/public/${filename}`
@@ -154,7 +155,7 @@ const insertSubmission = async (submission: Submission) => {
 		is_private: isPrivate
 	}
 
-	return await Client.mutate({
+	return Client.mutate({
 		mutation: insert_submission,
 		variables: values
 	})
@@ -168,7 +169,7 @@ export const addSubmission = async (submission: Submission): Promise<any> => {
 	try {
 		return await insertSubmission(submission)
 	} catch (e) {
-		console.error(e)
+		logger.error(e)
 		return e
 	}
 

@@ -1,3 +1,4 @@
+import { logger } from "utils/logger";
 import { v4 as uuid } from "uuid";
 import { Client, getAccumulatedSet, getRandomImageSet } from "./db";
 import { add_user, get_user_info, increment_user_submissions } from "./queries";
@@ -9,13 +10,13 @@ interface User {
 }
 
 if (!process.env.NEXT_PUBLIC_ACCUMULATE_API_URL) {
-  console.error("NEXT_PUBLIC_ACCUMULATE_API_URL is not set");
+  logger.error("NEXT_PUBLIC_ACCUMULATE_API_URL is not set");
   process.exit(1);
 }
 
 const isAccumulating = process.env.NEXT_PUBLIC_ACCUMULATE_API_URL == "true";
 
-console.log(`Using ${isAccumulating ? "accumulating" : "random"} API`);
+logger.info(`Using ${isAccumulating ? "accumulating" : "random"} API`);
 
 const generateId = () => uuid();
 
@@ -39,7 +40,7 @@ export const createUser = async () => {
   });
 
   if (errors) {
-    console.error(errors);
+    logger.error(errors);
     return null;
   }
 
@@ -57,7 +58,7 @@ export const inrementSubmissionIndex = async (uid: string) => {
   });
 
   if (errors) {
-    console.error(errors);
+    logger.error(errors);
     return null;
   }
 
@@ -73,7 +74,7 @@ export const getUser = async (uid: string) => {
   });
 
   if (error || errors) {
-    console.error(error || errors);
+    logger.error(error || errors);
     return null;
   }
 
