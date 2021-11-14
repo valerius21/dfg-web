@@ -1,7 +1,8 @@
 import { Box, Center, Code, Flex, Spacer } from "@chakra-ui/layout";
 import { Progress } from "@chakra-ui/progress";
-import { useColorModeValue, Text, Image, Stack } from "@chakra-ui/react";
+import { useColorModeValue, Text, Image, Stack, Heading } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
+import { STUDY_SIZE } from "db/db";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React, { useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
@@ -70,6 +71,17 @@ export const attentionCheckState = atom<AttentionCheck>({
   },
 });
 
+export interface User {
+  uid: string
+}
+
+export const userState = atom<User>({
+  key: 'r-uid',
+  default: {
+    uid: ''
+  }
+})
+
 const Annotate = ({
   id,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -77,6 +89,16 @@ const Annotate = ({
   const { data, error, mutate } = useSWR(`/api/user?id=${id}`, fetcher);
   const [attentionCheck, setAttentionCheck] =
     useRecoilState(attentionCheckState);
+  const [userId, setUserId] = useRecoilState(userState)
+
+  // initialize r-uid state
+  useEffect(() => {
+    if (id) {
+      setUserId({
+        uid: id
+      })
+    }
+  }, [id, setUserId])
 
   // initialize att-check state
   useEffect(() => {
@@ -146,10 +168,7 @@ const Annotate = ({
           >
             <Center p={5}>
               <Stack spacing={3}>
-                <Text>UID:</Text>
-                <Code> {id}</Code>
-                <Text>Submission No.:</Text>
-                <Code>{(nextIndex as number) - 1}</Code>
+                <Heading textAlign='center' color='red.400'>{(nextIndex as number) - 1} / {STUDY_SIZE}</Heading>
                 <Spacer />
                 <Spacer />
                 <Image
