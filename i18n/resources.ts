@@ -11,7 +11,8 @@ export const resources = {
       startUID: "Continue with User ID",
       questionOne:
         "please indicate how SENSITIVE would you consider this picture.",
-      questionTwo: "With whom would you be most likely to share this picture?",
+      questionTwo:
+        "Assuming you took this picture. With whom would you be most likely to share it?",
       a11: "not sensitive",
       a12: "little sensitive",
       a13: "sensitive",
@@ -48,7 +49,7 @@ export const resources = {
       questionOne:
         "Klassifizieren Sie wie SENSITIV (Empfindlich bzgl. Privatheit) sie dieses Foto betrachten.",
       questionTwo:
-        "Mit welchem Menschen würden Sie am ehesten dieses Foto teilen?",
+        "Angenommen, Sie haben dieses Bild aufgenommen. Mit wem würdest du es am ehesten teilen?",
       a11: "sehr sensitiv",
       a12: "ein wenig sensitiv",
       a13: "sensitiv",

@@ -214,14 +214,14 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						!isQuestionOne && isCheck ? t('checkTwo') : t('questionTwo')
 					}>
 						<Stack spacing="1">
+							<CheckboxControl name="targetDemographic" value="Nobody">{t('a25')}</CheckboxControl>
+							<hr />
+							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
 							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Friends">{t('a21')}</CheckboxControl>
 							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Aquaintance">{t('a24')}</CheckboxControl>
 							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Colleagues">{t('a23')}</CheckboxControl>
-							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Family">{t('a22')}</CheckboxControl>
 							<hr />
 							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Everybody">{t('a26')}</CheckboxControl>
-							<hr />
-							<CheckboxControl name="targetDemographic" value="Nobody">{t('a25')}</CheckboxControl>
 						</Stack>
 					</CheckboxContainer>
 					<Stack my={5} spacing={20} direction="row">
