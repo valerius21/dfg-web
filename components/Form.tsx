@@ -40,7 +40,7 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 	useEffect(() => {
 		if (pageNumber > STUDY_SIZE)
 			// redirect to done after STUDY_SIZE submits
-			router.push('/done')
+			router.push(`/done?uid=${uid}`)
 	}, [pageNumber, router])
 
 	useCallback(() => {

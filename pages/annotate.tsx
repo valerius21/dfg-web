@@ -158,19 +158,18 @@ const Annotate = ({
         <Flex w="full" alignItems="center" justifyContent="center">
           <Box
             bg={colorMode}
-            w="lg"
-            maxW="xl"
+            w="2xl"
+            maxW="2xl"
             borderWidth="1px"
             rounded="lg"
-            shadow="lg"
+            shadow="md"
             mt={5}
             position="relative"
+            px={"14"}
           >
             <Center p={5}>
-              <Stack spacing={3}>
+              <Stack spacing={"5"}>
                 <Heading textAlign='center' color='red.400'>{(nextIndex as number) - 1} / {STUDY_SIZE}</Heading>
-                <Spacer />
-                <Spacer />
                 <Image
                   boxShadow="md"
                   borderRadius="md"
@@ -180,7 +179,7 @@ const Annotate = ({
               </Stack>
             </Center>
             <Form
-              uid={id as string}
+              uid={userId.uid}
               imageID={isCheck() ? check!.imageID : images[nextIndex - 1].id}
               pageNumber={nextIndex as number}
               refetch={mutate}
