@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
-    "@types/js-yaml": "4.0.3",
+    "@types/js-yaml": "4.0.4",
     "@types/lodash": "4.14.176",
     "@types/node": "16.10.9",
     "@types/pino": "6.3.12",
