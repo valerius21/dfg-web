@@ -23,6 +23,7 @@ ENV NEXT_PUBLIC_DESCRIPTION_DE="Lorem, ipsum dolor sit amet consectetur adipisic
 ENV NEXT_PUBLIC_DESCRIPTION_EN="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore commodi tempora quibusdam! Fuga voluptatum obcaecati possimus modi quas mollitia cumque dignissimos eius placeat. Veritatis praesentium vel similique, aut eaque odio!"
 ENV NEXT_PUBLIC_ACCUMULATE_API_URL=false
 ENV NEXT_PUBLIC_STUDY_SIZE=60
+ENV NEXT_PUBLIC_ACCUMULATION_SIZE=40
 
 # API
 ENV NEXT_PUBLIC_PORT=8000

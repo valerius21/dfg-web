@@ -17,6 +17,11 @@ if (!process.env.NEXT_PUBLIC_STUDY_SIZE) {
   process.exit(1);
 }
 
+if (!process.env.NEXT_PUBLIC_ACCUMULATION_SIZE) {
+  logger.fatal("NEXT_PUBLIC_ACCUMULATION_SIZE not set");
+  process.exit(1);
+}
+
 if (!process.env.NEXT_PUBLIC_GRAPHQL_URL) {
   logger.fatal("NEXT_PUBLIC_GRAPHQL_URL is not set");
   process.exit(1);
@@ -31,6 +36,9 @@ const STUDY_SIZE: number = parseInt(process.env.NEXT_PUBLIC_STUDY_SIZE);
 const STUDY_SIZE_HALF: number = Math.floor(STUDY_SIZE / 2);
 const GRAPHQL_URL: string = process.env.NEXT_PUBLIC_GRAPHQL_URL;
 const IMAGE_SERVER: string = process.env.NEXT_PUBLIC_IMAGE_SERVER;
+const ACCUMULATION_SIZE: number = parseInt(
+  process.env.NEXT_PUBLIC_ACCUMULATION_SIZE
+);
 
 export const Client = new ApolloClient({
   link: new HttpLink({ uri: GRAPHQL_URL, fetch }),
@@ -110,15 +118,15 @@ export const getAccumulatedSet = async (): Promise<ImageInterface> => {
   let privateImages = await getPrivateImages();
   let publicImages = await getPublicImages();
 
-  // filter for 1 <= submissions <= 40
+  // filter for 1 <= submissions <= ACCUMULATION_SIZE
   let _private = priv.filter(
     (image: any) =>
-      image.submissions_aggregate.aggregate.count <= 40 &&
+      image.submissions_aggregate.aggregate.count <= ACCUMULATION_SIZE &&
       1 <= image.submissions_aggregate.aggregate.count
   );
   let _public = publ.filter(
     (image: any) =>
-      image.submissions_aggregate.aggregate.count <= 40 &&
+      image.submissions_aggregate.aggregate.count <= ACCUMULATION_SIZE &&
       1 <= image.submissions_aggregate.aggregate.count
   );
 
