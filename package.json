@@ -22,7 +22,7 @@
     "dotenv": "10.0.0",
     "formik": "2.2.9",
     "formik-chakra-ui": "1.4.8",
-    "framer-motion": "4.1.17",
+    "framer-motion": "5.3.0",
     "graphql": "15.7.2",
     "i18next": "21.4.2",
     "js-yaml": "4.1.0",
