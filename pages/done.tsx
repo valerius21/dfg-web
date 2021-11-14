@@ -46,8 +46,7 @@ const Done = () => {
 					<Button onClick={onCopy} isDisabled={hasCopied} ml={2}>{hasCopied ? 'Copied' : 'Copy'}</Button>
 				</Flex>
 				<Spacer />
-				{/* TODO: Add Limesurvey Link  */}
-				<Link href="#" >
+				<Link href="https://survey.academiccloud.de/index.php/532222?lang=de" >
 					<Center>
 						<PrimaryButton>Continue on Limesurvey</PrimaryButton>
 					</Center>
