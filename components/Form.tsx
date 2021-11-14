@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Box, Button, Stack, Radio, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Button, Stack, Radio, Flex, Spacer, Thead, Table, Th, Tr, Tbody, Td } from "@chakra-ui/react";
 import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
@@ -13,7 +13,7 @@ import { STUDY_SIZE } from 'db/db';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
-	targetDemographic: Yup.array().min(1),
+	targetDemographic: Yup.array().min(1).required(),
 });
 
 interface FormProps {
@@ -200,12 +200,38 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						label={
 							isQuestionOne && isCheck ? t('checkOne') : t('questionOne')
 						}>
-						<Stack spacing="1">
+						<Table variant='simple'>
+							<Thead>
+								<Tr>
+									<Th>{t('a11')}</Th>
+									<Th>{t('a12')}</Th>
+									<Th>{t('a13')}</Th>
+									<Th>{t('a14')}</Th>
+								</Tr>
+							</Thead>
+							<Tbody>
+								<Tr>
+									<Td>
+										<Radio value="1" />
+									</Td>
+									<Td>
+										<Radio value="2" />
+									</Td>
+									<Td>
+										<Radio value="3" />
+									</Td>
+									<Td>
+										<Radio value="4" />
+									</Td>
+								</Tr>
+							</Tbody>
+						</Table>
+						{/* <Stack spacing="1">
 							<Radio value="1">{t('a11')}</Radio>
 							<Radio value="3">{t('a12')}</Radio>
 							<Radio value="2">{t('a13')}</Radio>
 							<Radio value="4">{t('a14')}</Radio>
-						</Stack>
+						</Stack> */}
 					</RadioGroupControl>
 					<CheckboxContainer mt={4} name="targetDemographic" label={
 						!isQuestionOne && isCheck ? t('checkTwo') : t('questionTwo')
