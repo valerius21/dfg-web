@@ -21,7 +21,7 @@
     "cypress": "8.6.0",
     "dotenv": "10.0.0",
     "formik": "2.2.9",
-    "formik-chakra-ui": "1.4.7",
+    "formik-chakra-ui": "1.4.8",
     "framer-motion": "4.1.17",
     "graphql": "15.6.1",
     "i18next": "20.6.1",
