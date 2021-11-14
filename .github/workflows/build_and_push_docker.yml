@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@0a196c9debcb2a8c801667d284cc098c0fe08d7f
         with:
           push: true
           file: ${{ matrix.dockerfile }}
