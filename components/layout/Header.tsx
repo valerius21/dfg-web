@@ -14,7 +14,7 @@ const Header = () => {
 	return (
 		<Flex>
 			<Text m={3}>
-				User ID: <Code>{uid}</Code>
+				{uid && <>User ID: <Code>{uid}</Code></>}
 			</Text>
 			<Spacer />
 			<Box>
