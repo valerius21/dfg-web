@@ -201,13 +201,10 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 							isQuestionOne && isCheck ? t('checkOne') : t('questionOne')
 						}>
 						<Stack spacing="1">
-
 							<Radio value="1">{t('a11')}</Radio>
 							<Radio value="3">{t('a12')}</Radio>
 							<Radio value="2">{t('a13')}</Radio>
 							<Radio value="4">{t('a14')}</Radio>
-							{/* TODO: insert seperator */}
-							<Radio value="4">{t('a15')}</Radio>
 						</Stack>
 					</RadioGroupControl>
 					<CheckboxContainer mt={4} name="targetDemographic" label={
