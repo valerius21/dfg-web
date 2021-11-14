@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import { attentionCheckState, Check } from 'pages/annotate';
 import { logger } from 'utils/logger';
 import { fetcher } from 'utils/utils';
+import { STUDY_SIZE } from 'db/db';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
@@ -37,8 +38,8 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 	const { isQuestionOne } = currentCheck
 
 	useEffect(() => {
-		if (pageNumber > 100)
-			// redirect to done after 100 submits
+		if (pageNumber > STUDY_SIZE)
+			// redirect to done after STUDY_SIZE submits
 			router.push('/done')
 	}, [pageNumber, router])
 

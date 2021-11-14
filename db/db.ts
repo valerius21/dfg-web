@@ -32,11 +32,12 @@ if (!process.env.NEXT_PUBLIC_IMAGE_SERVER) {
   process.exit(1);
 }
 
-const STUDY_SIZE: number = parseInt(process.env.NEXT_PUBLIC_STUDY_SIZE);
-const STUDY_SIZE_HALF: number = Math.floor(STUDY_SIZE / 2);
-const GRAPHQL_URL: string = process.env.NEXT_PUBLIC_GRAPHQL_URL;
-const IMAGE_SERVER: string = process.env.NEXT_PUBLIC_IMAGE_SERVER;
-const ACCUMULATION_SIZE: number = parseInt(
+// TODO: refactor into seperate file
+export const STUDY_SIZE: number = parseInt(process.env.NEXT_PUBLIC_STUDY_SIZE);
+export const STUDY_SIZE_HALF: number = Math.floor(STUDY_SIZE / 2);
+export const GRAPHQL_URL: string = process.env.NEXT_PUBLIC_GRAPHQL_URL;
+export const IMAGE_SERVER: string = process.env.NEXT_PUBLIC_IMAGE_SERVER;
+export const ACCUMULATION_SIZE: number = parseInt(
   process.env.NEXT_PUBLIC_ACCUMULATION_SIZE
 );
 
