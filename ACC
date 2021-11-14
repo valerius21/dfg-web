@@ -22,11 +22,12 @@ ENV NEXT_PUBLIC_CUSTOM_UID=true
 ENV NEXT_PUBLIC_DESCRIPTION_DE="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore commodi tempora quibusdam! Fuga voluptatum obcaecati possimus modi quas mollitia cumque dignissimos eius placeat. Veritatis praesentium vel similique, aut eaque odio!"
 ENV NEXT_PUBLIC_DESCRIPTION_EN="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore commodi tempora quibusdam! Fuga voluptatum obcaecati possimus modi quas mollitia cumque dignissimos eius placeat. Veritatis praesentium vel similique, aut eaque odio!"
 ENV NEXT_PUBLIC_ACCUMULATE_API_URL=true
+ENV NEXT_PUBLIC_STUDY_SIZE=60
 
 # API
-ENV NEXT_PORT=8000
-ENV NEXT_GRAPHQL_URL="https://c102-226.cloud.gwdg.de/v1/graphql"
-ENV NEXT_IMAGE_SERVER="https://c102-251.cloud.gwdg.de"
+ENV NEXT_PUBLIC_PORT=8000
+ENV NEXT_PUBLIC_GRAPHQL_URL="https://c102-226.cloud.gwdg.de/v1/graphql"
+ENV NEXT_PUBLIC_MAGE_SERVER="https://c102-251.cloud.gwdg.de"
 
 RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
 
