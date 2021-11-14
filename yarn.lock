@@ -1576,11 +1576,108 @@
   dependencies:
     core-js "^3.0.0"
 
+"@teambit/base-ui.theme.brand-definition@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.brand-definition/-/base-ui.theme.brand-definition-1.0.0.tgz#abb8271e3b61766f8a441ac38ec82dcd4f9238a9"
+  integrity sha512-1IapashD5oxvRsw5On5eHzx3d4Cf2+u+ajb31ATcnFfaGVEvC/V3bFQ6t3VNnyI2ewOYiEuxGJOboxfZi7M+IA==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.color-definition@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.color-definition/-/base-ui.theme.color-definition-1.0.1.tgz#eda15d55f06ff0c3421c271753301adcdfe7fbca"
+  integrity sha512-9JYKPLhxJhsPfA4PkSvoWGlQEb2dlG2uWiCxQuKoRVzM2YivIfEv63BMO8/4xnvGtJsPR/lOrBKDKahjN6jS8g==
+  dependencies:
+    "@teambit/base-ui.theme.colors" "1.0.0"
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.colors@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.colors/-/base-ui.theme.colors-1.0.0.tgz#3aff9efa283d24b74447e4d75f80ec74a528aee5"
+  integrity sha512-3lKvT0eFMwkOGydNHu8TU2xlRHWHQVzx2Uxk50sICGlIjAcEyIZ1E655qvF8B/KPSES81rj/nozWklslhVBMeQ==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.fonts.book@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.fonts.book/-/base-ui.theme.fonts.book-1.0.2.tgz#cc9c8252b2eb98edc6e08cea7e78e5a1df220ed5"
+  integrity sha512-NHtfXmTMzRBPCg7hRULepNsOYRH8m95mU5d33KlxOn1I9CiSSRWCwV9mWPgZW7eS9EWUZG+BsPcK+umm3I9BZQ==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.fonts.roboto@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.fonts.roboto/-/base-ui.theme.fonts.roboto-1.0.0.tgz#6f131c2611d0bdb3a7c89f85604b138c4e0e1437"
+  integrity sha512-a1DUqAJDdyqGIX4s87zW0unmmlvNI+U1vNT2zgm4hfoAQayOFQHwUlA6lRfu/fomyXYFsKhWNwhSu0lIhNsmqA==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.heading-margin-definition@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.heading-margin-definition/-/base-ui.theme.heading-margin-definition-1.0.0.tgz#eb1d24cab8c198083fda32e98a777773ad78cd4b"
+  integrity sha512-gPKAXOWOlBqsQ88z15yOffJOwV1nqtnSTiF/a00OUoL/Pm41yATnzM+CpxaKT4g6LFfoQvnZJHVPKQ/u3loDoA==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.shadow-definition@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.shadow-definition/-/base-ui.theme.shadow-definition-1.0.0.tgz#d107ef9564f408ba68a032fae23bdbbbd6c2d853"
+  integrity sha512-z58KOqj95gjmW48IK53NMlp/NZKhJ3iSQnrFCJ1d46XmimfIe2oQdxFW/B69W+Dc8AyM1ES/pbqLVAmE38uxAw==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.size-definition@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.size-definition/-/base-ui.theme.size-definition-1.0.0.tgz#8f35fea2776cc60c38fbb75755087e605979f6bf"
+  integrity sha512-cOexDIzZvG37G76bn0P6SPfR68UKh4ZlH10fZKJsBcIEs4s9Ne5+zPqhDyjgKCHZVOqIj/0I4EVBFIb8o06L2w==
+  dependencies:
+    core-js "^3.0.0"
+
 "@teambit/base-ui.theme.sizes@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.sizes/-/base-ui.theme.sizes-1.0.0.tgz#4296c2d9f6128dd40c5e49cb270a113e2cad3ddc"
   integrity sha512-A2PoEhZ/8GYSeypqIMGK0Hu/bcpfDdquxQtkXZ34bIpXdYaYGn0tHIJTAuxJTInWM+qLMBAHQ32p3qkm86IuDQ==
   dependencies:
+    core-js "^3.0.0"
+
+"@teambit/base-ui.theme.theme-provider@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@teambit/base-ui.theme.theme-provider/-/base-ui.theme.theme-provider-1.0.3.tgz#9526ec7bd92708d55d0abb13ea9f600b67fcc47d"
+  integrity sha512-EmBGHAy/JxVgziNAy84KSCtA41fvhcfXMCM4BDX0WQGBq24f5MINXzoP1pDmUwS9hDKGTS1DS7T4iV9b/OAggw==
+  dependencies:
+    "@teambit/base-ui.theme.brand-definition" "1.0.0"
+    "@teambit/base-ui.theme.color-definition" "1.0.1"
+    "@teambit/base-ui.theme.fonts.book" "1.0.2"
+    "@teambit/base-ui.theme.heading-margin-definition" "1.0.0"
+    "@teambit/base-ui.theme.shadow-definition" "1.0.0"
+    "@teambit/base-ui.theme.size-definition" "1.0.0"
+    classnames "^2.2.6"
+    core-js "^3.0.0"
+
+"@teambit/design.theme.icons-font@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@teambit/design.theme.icons-font/-/design.theme.icons-font-1.0.2.tgz#e4d18cd249e1de22f8ed928ee112b46829f9a760"
+  integrity sha512-tMN2zjVuZzH5DmWmneh5XCOmwKqfqGVw+wCHcmM1io3omIuw52QdzBIMwnPWTwGhPyd258SoQIPfktd2QMn3XQ==
+  dependencies:
+    core-js "^3.0.0"
+
+"@teambit/documenter.theme.theme-compositions@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@teambit/documenter.theme.theme-compositions/-/documenter.theme.theme-compositions-4.1.3.tgz#50945c493749f0224ede0776f43d8180c794b95c"
+  integrity sha512-eYeFyv63SMCaAio+NGQu/3tQxC+bGw7M8tpcukQyBa7mk24KmS4K0co0rKSZpgjFB2Ht4gzUYR02RiwDKGRv/w==
+  dependencies:
+    "@teambit/design.theme.icons-font" "1.0.2"
+    "@teambit/documenter.theme.theme-context" "4.0.5"
+    core-js "^3.0.0"
+
+"@teambit/documenter.theme.theme-context@4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@teambit/documenter.theme.theme-context/-/documenter.theme.theme-context-4.0.5.tgz#2216379c54130ca8a85a57ce117c5a0591b67c52"
+  integrity sha512-B6PaAHEqE7xfjT1wPhmIAv8sXCBiiAmEZ0Vyn4d/ZXj0ZDpvOJl/xjy1O+vPa3lRqw7X3PcEDLziswC6LE9G2A==
+  dependencies:
+    "@teambit/base-ui.theme.fonts.roboto" "1.0.0"
+    "@teambit/base-ui.theme.theme-provider" "1.0.3"
+    classnames "^2.2.6"
     core-js "^3.0.0"
 
 "@teambit/documenter.ui.consumable-link@^4.0.5":
