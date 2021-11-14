@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Box, Button, Stack, Radio } from "@chakra-ui/react";
+import { Box, Button, Stack, Radio, Flex, Spacer } from "@chakra-ui/react";
 import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import { CheckboxControl, CheckboxContainer, RadioGroupControl } from "formik-chakra-ui";
@@ -224,23 +224,30 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 							<CheckboxControl isDisabled={values.targetDemographic.indexOf('Nobody') !== -1} name="targetDemographic" value="Everybody">{t('a26')}</CheckboxControl>
 						</Stack>
 					</CheckboxContainer>
-					<Stack my={5} spacing={20} direction="row">
-						<Button
-							size="md"
-							rounded="full"
-							color="white"
-							bg="red.400"
-							_hover={{ bg: 'red.300' }}
-							type="submit"
-							isLoading={isSubmitting}
-						>
-							{t('submit')}
-						</Button>
-						<Button onClick={() => {
-							handleReset()
-							refetch()
-						}}>Reset</Button>
-					</Stack>
+					<Flex my={8} >
+						<Box>
+							<Button
+								size="md"
+								rounded="full"
+								color="white"
+								bg="red.400"
+								_hover={{ bg: 'red.300' }}
+								type="submit"
+								isLoading={isSubmitting}
+							>
+								{t('submit')}
+							</Button>
+						</Box>
+						<Spacer />
+						<Box>
+							<Button mr='0' onClick={() => {
+								handleReset()
+								refetch()
+							}}>
+								Reset
+							</Button>
+						</Box>
+					</Flex>
 				</Box>
 			)}
 		</Formik>
