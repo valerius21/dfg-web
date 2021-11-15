@@ -10,6 +10,7 @@ import { attentionCheckState, Check } from 'pages/annotate';
 import { logger } from 'utils/logger';
 import { fetcher } from 'utils/utils';
 import { STUDY_SIZE } from 'db/db';
+import _ from 'lodash';
 
 const validateSchema = Yup.object({
 	sensitivity: Yup.string().required(),
@@ -203,35 +204,21 @@ const Form: FC<FormProps> = ({ pageNumber, uid, imageID, refetch, isCheck }) => 
 						<Table variant='simple'>
 							<Thead>
 								<Tr>
-									<Th>{t('a11')}</Th>
-									<Th>{t('a12')}</Th>
-									<Th>{t('a13')}</Th>
-									<Th>{t('a14')}</Th>
+									{_.range(1, 6).map((val, index) => (
+										<Th key={index}>{t(`a1${val}`)}</Th>
+									))}
 								</Tr>
 							</Thead>
 							<Tbody>
 								<Tr>
-									<Td>
-										<Radio value="1" />
-									</Td>
-									<Td>
-										<Radio value="2" />
-									</Td>
-									<Td>
-										<Radio value="3" />
-									</Td>
-									<Td>
-										<Radio value="4" />
-									</Td>
+									{_.range(1, 6).map((val, index) => (
+										<Td key={index}>
+											<Radio value={`${val}`} />
+										</Td>
+									))}
 								</Tr>
 							</Tbody>
 						</Table>
-						{/* <Stack spacing="1">
-							<Radio value="1">{t('a11')}</Radio>
-							<Radio value="3">{t('a12')}</Radio>
-							<Radio value="2">{t('a13')}</Radio>
-							<Radio value="4">{t('a14')}</Radio>
-						</Stack> */}
 					</RadioGroupControl>
 					<CheckboxContainer mt={4} name="targetDemographic" label={
 						!isQuestionOne && isCheck ? t('checkTwo') : t('questionTwo')
