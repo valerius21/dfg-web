@@ -4,11 +4,25 @@ import { Heading, Center, Text, Stack, Spacer, useClipboard, Input, Flex, Button
 import PrimaryButton from '../components/PrimaryButton'
 import { useRecoilValue } from 'recoil';
 import { userState } from './annotate';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { logger } from 'utils/logger';
 
-const Done = () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	logger.info('getServerSideProps', context);
+	return {
+		props: {
+			uid: context.query.uid as string,
+		}
+	}
+}
+
+const Done = ({
+	uid
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { t } = useTranslation()
-	const { uid } = useRecoilValue(userState)
+	const { uid: stateUid } = useRecoilValue(userState)
 	const { hasCopied, onCopy } = useClipboard(uid)
+	const userId = stateUid || uid
 
 	return (
 		<Center>
@@ -39,16 +53,15 @@ const Done = () => {
 				</Heading>
 				<Spacer />
 				{/* TODO: Translate */}
-				<Text fontSize='2xl'>Please copy your user ID <strong>(UID)</strong> below to continue on Limesurvey.</Text>
-				{/* <pre>{JSON.stringify(uid, null, 2)}</pre> */}
+				<Text fontSize='2xl'>{t('copyId')}</Text>
 				<Flex>
-					<Input value={uid} isReadOnly placeholder="No UID found. Please check your URL!" />
+					<Input value={userId} isReadOnly placeholder="No UID found. Please check your URL!" />
 					<Button onClick={onCopy} isDisabled={hasCopied} ml={2}>{hasCopied ? 'Copied' : 'Copy'}</Button>
 				</Flex>
 				<Spacer />
-				<Link href="https://survey.academiccloud.de/index.php/532222?lang=de" >
+				<Link href={`https://survey.academiccloud.de/index.php/532222?lang=de&uid=${userId}`} >
 					<Center>
-						<PrimaryButton>Continue on Limesurvey</PrimaryButton>
+						<PrimaryButton>{t('continueLimesurvey')}</PrimaryButton>
 					</Center>
 				</Link>
 			</Stack>

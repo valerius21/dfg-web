@@ -35,6 +35,8 @@ export const resources = {
         "This can take some time depending on your connection...",
       checkOne: `How likely is that you are paying attention, please select "not possible"`,
       checkTwo: `How likely is that you are paying attention, please select "everybody"`,
+      copyId: `Please copy your user ID (UID) below to continue on Limesurvey`,
+      continueLimesurvey: `Continue on Limesurvey`,
     },
   },
   de: {
@@ -71,6 +73,9 @@ export const resources = {
         "Abhängig von der Verbindung kann dies einige Sekunden in Anspruch nehmen...",
       checkOne: `Wie wahrscheinlich ist es, dass Sie aufmerksam sind? Bitte wählen Sie "nicht entscheidbar" aus.`,
       checkTwo: `Wie wahrscheinlich ist es, dass Sie aufmerksam sind? Bitte wählen Sie "Alle" aus.`,
+      copyId:
+        "Bitte kopieren Sie die unten stehende User ID (UID) um damit auf Limesurvey fortzufahren.",
+      continueLimesurvey: "Weiter zu Limesurvey",
     },
   },
 };
