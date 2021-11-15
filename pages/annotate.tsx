@@ -154,18 +154,19 @@ const Annotate = ({
 
     return (
       <>
-        <Progress colorScheme="red" value={nextIndex as number} />
-        <Flex w="full" alignItems="center" justifyContent="center">
+        <Flex
+          mx='auto'
+          maxW="3xl"
+        >
+          <Progress mx='auto' colorScheme="red" value={nextIndex as number} display={{ base: 'none', md: 'flex' }} />
           <Box
             bg={colorMode}
-            w="2xl"
-            maxW="2xl"
-            borderWidth="1px"
             rounded="lg"
-            shadow="md"
+            borderWidth={{ base: '0px', md: "1px" }}
+            shadow={{ base: 'none', md: 'md' }}
             mt={5}
-            position="relative"
             px={"14"}
+            mx='auto'
           >
             <Center p={5}>
               <Stack spacing={"5"}>
