@@ -18,7 +18,7 @@
     "@material-ui/core": "4.12.3",
     "axios": "0.24.0",
     "cross-fetch": "3.1.4",
-    "cypress": "9.0.0",
+    "cypress": "9.1.0",
     "dotenv": "10.0.0",
     "formik": "2.2.9",
     "formik-chakra-ui": "1.4.8",
