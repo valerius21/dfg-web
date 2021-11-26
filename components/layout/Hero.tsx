@@ -76,9 +76,13 @@ const Hero: FC = () => {
 							{t('title')}
 						</Text>
 					</Heading>
-					<Text color={'gray.500'}>
-						{t('description')}
-					</Text>
+					<Stack>
+						{[1, 2, 3, 4, 5, 6].map((item, index) => (
+							<Text key={index} color={'gray.800'}>
+								{t(`description${item}`)}
+							</Text>
+						))}
+					</Stack>
 					<Stack
 						spacing={{ base: 4, sm: 6 }}
 						direction={{ base: 'column', sm: 'row' }}>

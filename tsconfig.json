@@ -32,7 +32,8 @@
         "pages/api/*"
       ]
     },
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
