@@ -55,7 +55,7 @@ const Done = ({
 				{/* TODO: Translate */}
 				<Text fontSize='2xl'>{t('copyId')}</Text>
 				<Flex>
-					<Input value={userId} isReadOnly placeholder="No UID found. Please check your URL!" />
+					<Input id="doneInput" value={userId} isReadOnly placeholder="No UID found. Please check your URL!" />
 					<Button onClick={onCopy} isDisabled={hasCopied} ml={2}>{hasCopied ? 'Copied' : 'Copy'}</Button>
 				</Flex>
 				<Spacer />

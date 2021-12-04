@@ -141,7 +141,7 @@ const Annotate = ({
     const {
       users_by_pk: { images, next_index: nextIndex },
     } = data.data;
-    if (nextIndex === 101) return <Done />;
+    if (nextIndex === STUDY_SIZE + 1) return <Done />;
 
     const { checks } = attentionCheck;
     const check = checks.find(({ page }) => page === nextIndex - 1);
@@ -170,7 +170,7 @@ const Annotate = ({
           >
             <Center p={5}>
               <Stack spacing={"5"}>
-                <Heading textAlign='center' color='red.400'>{(nextIndex as number) - 1} / {STUDY_SIZE}</Heading>
+                <Heading textAlign='center' color='red.400'>{(nextIndex as number)} / {STUDY_SIZE}</Heading>
                 <Image
                   boxShadow="md"
                   borderRadius="md"
