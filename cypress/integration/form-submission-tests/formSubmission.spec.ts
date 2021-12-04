@@ -11,8 +11,8 @@ describe("Form Submission Test", () => {
 
   // const attCheckOneText =
   //   'How likely is that you are paying attention, please select "everybody"';
-  it("complete the survey", () => {
-    fromNumbers.forEach((submissionNo) => {
+  fromNumbers.forEach((submissionNo) => {
+    it(`Submit Form ${submissionNo + 1}`, () => {
       cy.get("h2").should("contain", `${submissionNo + 1} / 60`);
       cy.get("input[type=radio]").first().check({ force: true });
       cy.get('[type="checkbox"]').check(["Nobody"], { force: true });
