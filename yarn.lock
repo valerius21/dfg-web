@@ -3691,10 +3691,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formik-chakra-ui@1.4.8:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/formik-chakra-ui/-/formik-chakra-ui-1.4.8.tgz#656b9d8cfec06d3f9a463367dc9f755484fa4dd2"
-  integrity sha512-bHElnh27BHDXQfjjj3efNBk1ovSwCfj6SY8hIuMickDM7ETnPg3sMbStEoY74R/bfCwlW8MAlia3T6B4vJ7S3w==
+formik-chakra-ui@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/formik-chakra-ui/-/formik-chakra-ui-1.6.1.tgz#5fa2e22ac2e45cb2050c2509fd90f6cd84e8bbf1"
+  integrity sha512-xZZ+QFdRnGZeHiBGg3/73A43+fJfTCN08m6I9nHNXYMdxqhP+zvDX6gvQhYuepIn3HELbUmXFf+1QCU2/fVO8w==
 
 formik@2.2.9:
   version "2.2.9"
