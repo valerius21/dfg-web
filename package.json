@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/client": "3.5.5",
+    "@apollo/client": "3.9.4",
     "@chakra-ui/icons": "1.1.1",
     "@chakra-ui/react": "1.7.2",
     "@emotion/react": "11.7.0",
